@@ -10,12 +10,14 @@ VALID = \033[1;32m
 NOTVALID = \033[1;31m
 LOADING = \033[3;33m
 RESET = \033[0m
+LIBFT_URL = git@github.com:BenjamsC08/42_00_libft.git
 
 all: libft/libft.a $(NAME)
-	@printf "$(VALID) - Done \t✅$(RESET)\n"
+	@printf "$(VALID) - Done \t\t\t✅$(RESET)\n"
 
 libft/libft.a:
-	@printf "\r$(LOADING) - libft: compilation \t\t🔃 $(RESET)"
+	@test -d libft || (printf "$(LOADING) - libft: cloning repo ... \t⏬$(RESET)\n" && git clone $(LIBFT_URL) libft > /dev/null 2>&1)
+	@printf "\r$(LOADING) - libft: compilation ... \t🔃 $(RESET)"
 	@$(MAKE) -C libft > /dev/null 2>&1
 	@printf "\n$(VALID) - libft: compilation terminée \t✅$(RESET)\n"
 
