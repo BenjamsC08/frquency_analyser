@@ -1,0 +1,8 @@
+
+
+parsing:
+	tout mettre en hexa de forme b0b0b1b1b2b2...
+	ont prend en charge (avec espace ou retour a la ligne entre chaque octets):
+							- \xb4\x18
+							- 0xb40x18
+							- 4 18
