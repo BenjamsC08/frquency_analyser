@@ -15,7 +15,9 @@ char  *get_hex(char **argv)
 		if (!str)
 			return (free(s), NULL);
 	}
-	return (str);
+	s = reset_hex(str);
+	free(str);
+	return (s);
 }
 
 int main(int argc, char **argv)
