@@ -19,7 +19,7 @@ libft/libft.a:
 	@test -d libft || (printf "$(LOADING) - libft: cloning repo ... \t⏬$(RESET)\n" && git clone $(LIBFT_URL) libft > /dev/null 2>&1)
 	@printf "\r$(LOADING) - libft: compilation ... \t🔃 $(RESET)"
 	@$(MAKE) -C libft > /dev/null 2>&1
-	@printf "\n$(VALID) - libft: compilation terminée \t✅$(RESET)\n"
+	@printf "\n$(VALID) - libft: comilation terminée \t✅$(RESET)\n"
 
 srcs/%.o: srcs/%.c
 	$(CC) $(FLAGS) $(INCLUDE_PATH) -c $< -o $@

@@ -42,39 +42,40 @@ char *remove_whitespace(char *str)
 	return (output);
 }
 
-int	type_analyser(char *str)
+char	*reformat_hex(char *str)
 {
-	int	type = 0;
-
-	printf("%s\n",str);
-	if (str[0] == 'x' || str[0] == 'X')
-		type = 1;
-	else if (str[0] == '0' && (str[1] == 'x' || str[1] == 'X'))
-		type = 2;
+	if (str[0] == 'x')
+		return (ft_remove_charset(str, "x"));
+	if (str[0] == 'X')
+		return (ft_remove_charset(str, "X"));
+	if (str[0] == '0' && str[1] == 'x')
+		return (ft_remove_substring(str, "0x"));
+	else if (str[0] == '0' && str[1] == 'X')
+		return (ft_remove_substring(str, "0X"));
+	if (str[2] == ':' || str[2] == ';' || str[2] == ',')
+		return (ft_remove_charset(str, ":;,"));
 	else
-		type = 3;
-	return (type);
+		return (ft_strdup(str));
+	return (NULL);
 }
-// 1 \x without space or new line
-// 2 \x with space bettween octet
-// 3 \x with newline bettween octet
-// 4 0x without space or new line
-// 5 0x with space bettween octet
-// 6 0x with newline bettween octet
-// 7 nothing to do is what we're aiming for
-// 8 octet in hex but separate with space
-// 9 octet in hex but separate with newline
-/*char	*from_hex(char *str)*/
-/*{*/
-/**/
-/*}*/
-int main(int argc, char **argv)
+
+char	*from_hex(char *str)
 {
 	char  *input_user;
+
+	input_user = remove_whitespace(str);
+	str = reformat_hex(input_user);
+	free(input_user);
+	return (str);
+}
+
+int main(int argc, char **argv)
+{
+	char  *input_clean;
 	if (argc == 2)
 	{
-		input_user = remove_whitespace(argv[1]);
-		printf("%d\n", type_analyser(input_user));
-		free(input_user);
+		input_clean = from_hex(argv[1]);
+		printf("%s\n",input_clean);
+		free(input_clean);
 	}
 }
