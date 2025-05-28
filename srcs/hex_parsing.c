@@ -1,10 +1,9 @@
-#include <stdio.h>
-#include "libft.h"
+#include "xor_dcode.h"
 
 int	ft_ishex(char c)
 {
 	char	charset_l[] = "0123456789abcdef";
-	char	charset_u[] = "0123456789ABCDEF";
+	char	charset_u[] = "0123456789abcdef";
 	int		i = -1;
 
 	while (charset_l[++i])
@@ -42,40 +41,27 @@ char *remove_whitespace(char *str)
 	return (output);
 }
 
-char	*reformat_hex(char *str)
+char	*reset_hex(char *str)
 {
-	if (str[0] == 'x')
-		return (ft_remove_charset(str, "x"));
-	if (str[0] == 'X')
-		return (ft_remove_charset(str, "X"));
-	if (str[0] == '0' && str[1] == 'x')
-		return (ft_remove_substring(str, "0x"));
-	else if (str[0] == '0' && str[1] == 'X')
-		return (ft_remove_substring(str, "0X"));
-	if (str[2] == ':' || str[2] == ';' || str[2] == ',')
-		return (ft_remove_charset(str, ":;,"));
-	else
-		return (ft_strdup(str));
-	return (NULL);
-}
+	char  *iu;
+	char  *out;
 
-char	*from_hex(char *str)
-{
-	char  *input_user;
-
-	input_user = remove_whitespace(str);
-	str = reformat_hex(input_user);
-	free(input_user);
-	return (str);
-}
-
-int main(int argc, char **argv)
-{
-	char  *input_clean;
-	if (argc == 2)
-	{
-		input_clean = from_hex(argv[1]);
-		printf("%s\n",input_clean);
-		free(input_clean);
-	}
+	iu = remove_whitespace(str);
+	if (!iu)
+		return (NULL);
+	out = NULL;
+	if (iu[0] == 'x')
+		out = ft_remove_charset(iu, "x");
+	if (iu[0] == 'X')
+		out = ft_remove_charset(iu, "X");
+	if (iu[0] == '0' && iu[1] == 'x')
+		out = ft_remove_substring(iu, "0x");
+	if (iu[0] == '0' && iu[1] == 'X')
+		out = ft_remove_substring(iu, "0X");
+	if (iu[2] == ':' || iu[2] == ';' || iu[2] == ',')
+		out = ft_remove_charset(iu, ":;,");
+	if (!out)
+		return (iu);
+	free(iu);
+	return (out);
 }
