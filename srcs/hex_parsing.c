@@ -69,3 +69,38 @@ char	*reset_hex(char *str)
 	free(iu);
 	return (out);
 }
+
+char	*ft_str_insert(char *str, char *to_insert, int step)
+{
+	char	*out;
+	int		k;
+
+	k = ft_strlen(str);
+	out = ft_calloc(sizeof(char), (k + ((k/2) * ft_strlen(to_insert) + 1));
+	if (!out)
+		return (NULL);
+
+}
+
+char	*hex_format(char *str, type char)
+{
+	char	*out;
+
+	out = reset_hex(str);
+	if (!out)
+		return (NULL);
+	if (type == ONE_LINE)
+		return (out);
+	if (type == COMMA)
+	{
+		s = ft_cut(START, str, 2);
+		out = ft_str_insert(str, toInsert, 2);
+		if (!out)
+			return (free(s), NULL);
+		s = ft_strfjoin(s, out);
+		free (out);
+		return (s);
+
+
+	}
+}
