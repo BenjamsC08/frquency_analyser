@@ -1,23 +1,25 @@
 #include "xor_dcode.h"
 
-int	ft_ishex(char c)
+int	ft_ischarset(char c, char *charset)
 {
-	char	charset_l[] = "0123456789abcdef";
-	char	charset_u[] = "0123456789abcdef";
-	int		i = -1;
-
-	while (charset_l[++i])
+	while (*charset)
 	{
-		if (c == charset_l[i])
+		if (c == *charset)
 			return (1);
-	}
-	i = -1;
-	while (charset_u[++i])
-	{
-		if (c == charset_l[i])
-			return (1);
+		charset++;
 	}
 	return (0);
+}
+
+int	ft_only_charset(char *str, const char *charset)
+{
+	while (*str)
+	{
+		if (!ft_ischarset(*str, (char *)charset))
+			return (0);
+		str++;
+	}
+	return (1);
 }
 
 char *remove_whitespace(char *str)
@@ -45,10 +47,12 @@ char	*reset_hex(char *str)
 {
 	char  *iu;
 	char  *out;
-
+	
 	iu = remove_whitespace(str);
 	if (!iu)
 		return (NULL);
+	if (!ft_only_charset(iu, "0123456789abcdefABCDEFxX:;,"))
+		return (free(iu), NULL);
 	out = NULL;
 	if (iu[0] == 'x')
 		out = ft_remove_charset(iu, "x");
