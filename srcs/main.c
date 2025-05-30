@@ -1,12 +1,11 @@
 #include "xor_dcode.h"
 
-char	*get_hex(int argc, char **argv)
+static char	*get_hex(int argc, char **argv)
 {
 	char	*str;
 	char	*out;
 
 	str = NULL;
-	out = NULL;
 	if (argc == 1)
 		return (NULL);
 	if (argc >= 2)

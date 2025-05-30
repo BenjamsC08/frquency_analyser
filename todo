@@ -1,8 +1,35 @@
 
 
-parsing:
-	tout mettre en hexa de forme b0b0b1b1b2b2...
-	ont prend en charge (avec espace ou retour a la ligne entre chaque octets):
-							- \xb4\x18
-							- 0xb40x18
-							- 4 18
+THREADS for counting trinomes
+
+	2 structs 
+		une pour la liste chainee des trinomes:
+			- list *next
+			- void *data;
+				- char *str  (le trinomes en char)
+				- int count (le nombre que le thread en a vu)
+				- un int * avec l'index des position ou le trinome est retrouver pour faire des soustraction pour la taille de la cle
+			avec  (x - i - 3 : ou x est le numero du prochain trinome i le numero du trinome d'avant et 3 la taille des trinomes )
+				- un mutex par node pour que chaque philo puisse regarder son contenu
+
+		une pout les threads
+			- id	  #pas sur en vrai blc 
+			- length	(taille de l'echantillon a parcourir par threads)   
+			- str (char * du debut de leurs taff)
+			- liste chainee des trinomes
+
+
+
+penser a faire un truc comme suis pour compare tout les nodes sans avoir a refaire des boucle a la main
+
+void	ft_lstiter(t_list *lst, void (*f)(void *, char *), char *str)
+{
+	t_list	*current;
+
+	current = lst;
+	while (current != NULL)
+	{
+		f(current->content, str);
+		current = current->next;
+	}
+}
