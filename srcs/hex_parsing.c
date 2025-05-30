@@ -73,34 +73,66 @@ char	*reset_hex(char *str)
 char	*ft_str_insert(char *str, char *to_insert, int step)
 {
 	char	*out;
+	char	*o;
 	int		k;
 
 	k = ft_strlen(str);
-	out = ft_calloc(sizeof(char), (k + ((k/2) * ft_strlen(to_insert) + 1));
+	out = ft_calloc(sizeof(char), sizeof(char *));
 	if (!out)
 		return (NULL);
-
+	o = out;
+	k = 0;
+	while (str[k])
+	{
+		if (k % step == 0)
+			out = ft_strfjoin(out, to_insert);
+		out = ft_str_add_char(out, str[k]);
+		k++;
+	}
+	return (out);
 }
 
-char	*hex_format(char *str, type char)
+static char	*get_to_insert(int type)
+{
+	if (type == 1)
+		return ("0x");
+	if (type == 2)
+		return ("\\x");
+	if (type == 3)
+		return (" ");
+	if (type == 4)
+		return (":");
+	if (type == 5)
+		return (";");
+	if (type == 6)
+		return (",");
+	return (0);
+}
+
+char	*hex_format(char *str, int type)
 {
 	char	*out;
+	char	*s;
+	char	*to_insert;
 
 	out = reset_hex(str);
 	if (!out)
 		return (NULL);
 	if (type == ONE_LINE)
 		return (out);
-	if (type == COMMA)
+	to_insert = get_to_insert(type);
+	if (!to_insert)
+		return (out);
+	s = str;
+	if (type >= 4 && type < 7)
 	{
-		s = ft_cut(START, str, 2);
-		out = ft_str_insert(str, toInsert, 2);
-		if (!out)
-			return (free(s), NULL);
-		s = ft_strfjoin(s, out);
-		free (out);
-		return (s);
-
-
+		s = ft_cut(END, str, 2);
+		str += 2;
 	}
+	out = ft_str_insert(str, to_insert, 2);
+	if (!out)
+		return (free(s), NULL);
+	if (s != str)
+		return (free (out), ft_strfjoin(s, out));
+	return (out);
 }

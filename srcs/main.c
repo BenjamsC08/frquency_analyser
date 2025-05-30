@@ -1,38 +1,32 @@
 #include "xor_dcode.h"
 
-char  *get_hex(char **argv)
+char	*get_hex(int argc, char **argv)
 {
-	char *str;
-	char *s;
+	char	*str;
+	char	*out;
 
-	str = ft_strdup(*argv);
+	str = NULL;
+	out = NULL;
+	if (argc == 1)
+		return (NULL);
+	if (argc >= 2)
+		str = ft_unsplit((++argv), 0);
 	if (!str)
 		return (NULL);
-	while (*(++argv))
-	{
-		s = str;
-		str = ft_strfjoin(str, *argv);
-		if (!str)
-			return (free(s), NULL);
-	}
-	s = reset_hex(str);
+	out = hex_format(str, 0);
 	free(str);
-	return (s);
+	if (!out)
+		return (NULL);
+	return (out);
 }
 
 int main(int argc, char **argv)
 {
 	char	*str;
 
-	str = NULL;
-	if (argc == 1)
-		return (1);
-	if (argc == 2)
-		str = reset_hex(*(++argv));
-	else
-		str = get_hex(++argv);
+	str = get_hex(argc, argv);
 	if (!str)
 		return (1);
-	ft_printf("%s\n",str);
+	ft_printf("%s\n", str);
 	free(str);
 }
