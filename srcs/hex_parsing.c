@@ -73,14 +73,14 @@ char	*reset_hex(char *str)
 char	*ft_str_insert(char *str, char *to_insert, int step)
 {
 	char	*out;
-	char	*o;
+	/*char	*o;*/
 	int		k;
 
 	k = ft_strlen(str);
 	out = ft_calloc(sizeof(char), sizeof(char *));
 	if (!out)
 		return (NULL);
-	o = out;
+	/*o = out;*/
 	k = 0;
 	while (str[k])
 	{
@@ -133,6 +133,6 @@ char	*hex_format(char *str, int type)
 	if (!out)
 		return (free(s), NULL);
 	if (s != str)
-		return (free (out), ft_strfjoin(s, out));
+		return (ft_strfjoin(s, out));
 	return (out);
 }
