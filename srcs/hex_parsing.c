@@ -1,27 +1,5 @@
 #include "xor_dcode.h"
 
-int	ft_ischarset(char c, char *charset)
-{
-	while (*charset)
-	{
-		if (c == *charset)
-			return (1);
-		charset++;
-	}
-	return (0);
-}
-
-int	ft_only_charset(char *str, const char *charset)
-{
-	while (*str)
-	{
-		if (!ft_ischarset(*str, (char *)charset))
-			return (0);
-		str++;
-	}
-	return (1);
-}
-
 char *remove_whitespace(char *str)
 {
 	char	*output;
