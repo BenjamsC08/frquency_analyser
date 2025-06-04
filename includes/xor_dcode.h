@@ -20,11 +20,19 @@
 
 typedef struct s_data
 {
+	t_uint		max_threads;
+	t_ulong		char_by_thred;
+	t_uint		nb_threads;
+	t_list		**head;
+}				t_data;
+
+typedef struct s_data_node
+{
 	char			*trinome;
 	int				count;
 	int				*pos;
-	pthread_mutex_t	*m_node;
-} t_data;
+	pthread_mutex_t	*mtx_node;
+} t_data_node;
 
 typedef struct s_reader
 {
@@ -33,8 +41,12 @@ typedef struct s_reader
 	t_list	**h_list;
 } t_reader;
 
+// format HEX
 char	*remove_whitespace(char *str);
 char	*reset_hex(char *str);
 char	*hex_format(char *str, int type);
+// multi-threading
+char	**split_for_threads(char *str, t_data *data);
+
 
 #endif
