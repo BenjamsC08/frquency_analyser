@@ -12,6 +12,9 @@
 # define SEMI_COL 5
 # define COMMA 6
 
+#define CHAR_MIN_BY_THREADS 1024
+
+
 /*typedef struct s_list*/
 /*{*/
 /*	void				*content;*/
@@ -21,7 +24,7 @@
 typedef struct s_data
 {
 	t_uint		max_threads;
-	t_ulong		char_by_thred;
+	t_ulong		char_by_thread;
 	t_uint		nb_threads;
 	t_list		**head;
 }				t_data;
@@ -36,8 +39,8 @@ typedef struct s_data_node
 
 typedef struct s_reader
 {
-	t_ulong	length;
 	char	*sample;
+	t_ulong	length;
 	t_list	**h_list;
 } t_reader;
 
