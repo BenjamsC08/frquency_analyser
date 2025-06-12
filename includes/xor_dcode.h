@@ -12,8 +12,14 @@
 # define SEMI_COL 5
 # define COMMA 6
 
+#define TRINOME 'T'
+#define POS 'P'
+#define MTX 'M'
+#define COUNT 'C'
+
 #define CHAR_MIN_BY_THREADS 1024
 
+typedef pthread_mutex_t t_mtx;
 
 /*typedef struct s_list*/
 /*{*/
@@ -31,10 +37,10 @@ typedef struct s_data
 
 typedef struct s_data_node
 {
-	char			*trinome;
-	int				count;
-	int				*pos;
-	pthread_mutex_t	*mtx_node;
+	char	*trinome;
+	int		count;
+	int		*pos;
+	t_mtx	*mtx_node;
 } t_data_node;
 
 typedef struct s_reader
