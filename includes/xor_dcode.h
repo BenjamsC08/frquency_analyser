@@ -29,9 +29,11 @@ typedef pthread_mutex_t t_mtx;
 
 typedef struct s_data
 {
+	char		*text;
 	t_uint		max_threads;
 	t_ulong		char_by_thread;
 	t_uint		nb_threads;
+	pthread_t	*threads
 	t_list		**head;
 }				t_data;
 
@@ -45,7 +47,6 @@ typedef struct s_data_node
 
 typedef struct s_reader
 {
-	t_ulong	length;
 	char	*sample;
 	t_ulong	length;
 	t_list	**h_list;
