@@ -57,6 +57,10 @@ char	*reset_hex(char *str);
 char	*hex_format(char *str, int type);
 // multi-threading
 char	**split_for_threads(char *str, t_data *data);
-
+//data_node
+void    create_data_node(t_list **head, char *str, int pos);
+void	update_data_node(t_data_node *data, int pos);
+void    *extract_data_node(void *ptr_data, char type);
+void    free_data_node(t_data_node *data);
 
 #endif
