@@ -28,7 +28,7 @@ typedef struct s_data
 
 typedef struct s_reader
 {
-	t_long	length;
+	t_ulong	length;
 	char	*sample;
 	t_list	**h_list;
 } t_reader;
