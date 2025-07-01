@@ -57,19 +57,30 @@ t_list *init_head(char *tri)
     return (ft_lstnew(data));
 }
 
+t_list	*init_head()
+{
+	t_data_node	data;
+	//degeulasse mais tqt
+	data->trinome = NULL;
+	data->count = -1;
+	data->m_node = NULL;
+	data->pos = NULL;
+	return (ft_lstnew(&data));
+}
+
 int main(int argc, char **argv)
 {
     t_data data;
     t_list *head = NULL;
 
     if (!init_data(argc, argv, &data))
-        return 1;
+        return (1);
     head = init_head(data.text);
     if (!head)
-        return free(data.text), 1;
+        return (free(data.text), 1);
     data.head = &head;
-    if (!create_threads(&data))
-        return free(data.text), destroy_list(&head), 1;
+    /*if (!create_threads(&data))*/
+    /*    return free(data.text), destroy_list(&head), 1;*/
     print_list(data.head);
     destroy_list(data.head);
     pthread_mutex_destroy(&data.list_mtx);

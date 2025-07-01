@@ -31,7 +31,7 @@ int	add_data_node(t_list **head, char *str, int pos)
 	return (1);
 }
 
-int	update_data_node(t_data_node *data, int pos)
+void	update_data_node(t_data_node *data, int pos)
 {
 	int	*new_pos;
 	int	i;

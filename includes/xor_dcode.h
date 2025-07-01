@@ -3,7 +3,6 @@
 
 #include "xor_def.h"
 
-//	hex_parsing.c
 char	*remove_whitespace(char *str);
 char	*reset_hex(char *str);
 char	*ft_str_insert(char *str, char *to_insert, int step);
