@@ -1,4 +1,3 @@
-
 #include "xor_dcode.h"
 
 int	add_data_node(t_list **head, char *str, int pos)
@@ -31,7 +30,7 @@ int	add_data_node(t_list **head, char *str, int pos)
 	return (1);
 }
 
-void	update_data_node(t_data_node *data, int pos)
+int	update_data_node(t_data_node *data, int pos)
 {
 	int	*new_pos;
 	int	i;

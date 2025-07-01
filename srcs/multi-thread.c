@@ -1,9 +1,5 @@
 #include "xor_dcode.h"
 
-<<<<<<< HEAD
-=======
-
->>>>>>> refs/remotes/origin/main
 char	**split_for_threads(t_data *data)
 {
 	int		l;
@@ -11,11 +7,7 @@ char	**split_for_threads(t_data *data)
 	char	*str;
 	char	**strs;
 
-<<<<<<< HEAD
 	str = data->text + 1;
-=======
-	str = data->text;
->>>>>>> refs/remotes/origin/main
 	l = ft_strlen(str);
 	ft_fprintf(2, "%sDEBUG l:'%d', str:'%s'%s\n", ORANGE, l, str, RESET);
 	if (l == 0)
@@ -53,7 +45,6 @@ char	**split_for_threads(t_data *data)
 	return (strs);
 }
 
-<<<<<<< HEAD
 t_reader *init_data_threads(t_data *data, char *str)
 {
     t_reader *thread = ft_calloc(1, sizeof(t_reader));
@@ -177,28 +168,3 @@ int create_threads(t_data *data)
     free_strs(samples);
     return (1);
 }
-=======
-int	create_threads(t_data *data)
-{
-	char		**samples;
-	int			i;
-	t_reader	data_p;
-
-	samples = split_for_threads(data);
-	i = -1;
-	data->threads = ft_calloc(sizeof(pthread_t), data->nb_threads);
-	if (!data->threads)
-		return (0);
-	while (++i < data->nb_threads)
-	{
-		data_p = init_data_threads(data, samples, i);
-		pthread_create(data->threads[i], NULL, routines, data_p); //data_p est a free dans les threads peut etre utiliser une var global dans le cas ou un seul echou pour ne pas avoir de leak
-	}
-}
-
-
-	{
-		if (pthread_create(&obs->philos[i], NULL, routines, (void *)&(*ptr_ps)[i]) != 0)
-			return (t2f_mutex(obs, NULL), 0);
-	}
->>>>>>> refs/remotes/origin/main
