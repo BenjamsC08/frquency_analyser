@@ -1,22 +1,55 @@
 
 
-THREADS for counting trinomes
+
+Soucis actuelle dans explode sample si je add node je dois bloquer la liste entiere pas juste la node actuelle une ereur vers la print deja present essaye de debugger
+
+
+pour le prochain coup finioler le multi-thread.c et init les thread pour et leurs structs
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+THREADS for counting trigram
 
 	2 structs 
-		une pour la liste chainee des trinomes:
+		une pour la liste chainee des trigram:
 			- list *next
 			- void *data;
-				- char *str  (le trinomes en char)
+				- char *str  (le trigram en char)
 				- int count (le nombre que le thread en a vu)
-				- un int * avec l'index des position ou le trinome est retrouver pour faire des soustraction pour la taille de la cle
-			avec  (x - i - 3 : ou x est le numero du prochain trinome i le numero du trinome d'avant et 3 la taille des trinomes )
+				- un int * avec l'index des position ou le trigram est retrouver pour faire des soustraction pour la taille de la cle
+			avec  (x - i - 3 : ou x est le numero du prochain trigram i le numero du trinome d'avant et 3 la taille des trinomes )
 				- un mutex par node pour que chaque philo puisse regarder son contenu
 
 		une pout les threads
 			- id	  #pas sur en vrai blc 
 			- length	(taille de l'echantillon a parcourir par threads)   
 			- str (char * du debut de leurs taff)
-			- liste chainee des trinomes
+			- liste chainee des trigram
 
 
 
