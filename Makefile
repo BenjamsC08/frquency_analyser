@@ -1,5 +1,5 @@
 CC = cc
-FLAGS = -fsanitize=thread -g -Wall -Wextra -Werror
+FLAGS = -g -Wall -Wextra -Werror
 NAME = prog
 SRCS = srcs/main.c srcs/data_node_utils.c srcs/multi-thread.c srcs/list_utils.c srcs/hex_parsing.c
 OBJ = $(SRCS:.c=.o)

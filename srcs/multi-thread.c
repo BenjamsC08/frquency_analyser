@@ -47,8 +47,9 @@ t_reader *init_data_threads(t_data *data, char *str, t_mtx *mtx, int i)
         return (NULL);
     thread->sample = ft_strdup(str);
     if (!thread->sample)
-        return free(thread), NULL;
+        return free(thread), free(str), NULL;
     thread->length = ft_strlen(str);
+	free(str);
     thread->h_list = data->head;
 	thread->id = i;
 	thread->tmp_mtx = mtx;
@@ -96,19 +97,21 @@ void	destroy_reader(t_reader *data)
 	data = NULL;
 }
 
-#include <stdio.h>
-
 void	*routines(void *ptr_data)
 {
 	t_reader		*data;
 	t_ulong			i;
+	t_ulong			k;
 	
 	data = (t_reader *)ptr_data;
-
+	if (data->id == 0)
+		k = 1;
+	else
+		k = 0;
 	i = 0;
 	while (i < data->length - 3)
 	{
-		explode_sample(data, &data->sample[i], i);
+		explode_sample(data, &data->sample[i], i + k);
 		i++;
 	}
 	destroy_reader(data);
@@ -137,6 +140,7 @@ int create_threads(t_data *data)
         pthread_create(&data->threads[i], NULL, routines, data_p);
     }
     i = -1;
+	ft_dprintf(2, "%suse %d threads%s\n", ORANGE, data->nb_threads, RESET);
     while (++i < data->nb_threads)
 		pthread_join(data->threads[i], NULL);
     free(samples);

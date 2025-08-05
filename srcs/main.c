@@ -70,6 +70,7 @@ int main(int argc, char **argv)
         return free(data.text), destroy_list(&head), 1;
     print_list(data.head);
     destroy_list(data.head);
+	free(data.threads);
     free(data.text);
     return (0);
 }
