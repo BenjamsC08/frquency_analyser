@@ -1,7 +1,7 @@
 CC = cc
-FLAGS = -Wall -Wextra -Werror -g3 -O3
+FLAGS = -fsanitize=thread -g -Wall -Wextra -Werror
 NAME = prog
-SRCS = srcs/hex_parsing.c srcs/main.c
+SRCS = srcs/main.c srcs/data_node_utils.c srcs/multi-thread.c srcs/list_utils.c srcs/hex_parsing.c
 OBJ = $(SRCS:.c=.o)
 LIB_PATH = -Llibft
 LIB_NAME = -lft
@@ -10,13 +10,11 @@ VALID = \033[1;32m
 NOTVALID = \033[1;31m
 LOADING = \033[3;33m
 RESET = \033[0m
-LIBFT_URL = git@github.com:BenjamsC08/42_00_libft.git
 
 all: libft/libft.a $(NAME)
 	@printf "$(VALID) - Done \t\t\t✅$(RESET)\n"
 
 libft/libft.a:
-	@test -d libft || (printf "$(LOADING) - libft: cloning repo ... \t⏬$(RESET)\n" && git clone $(LIBFT_URL) libft > /dev/null 2>&1)
 	@printf "\r$(LOADING) - libft: compilation ... \t🔃 $(RESET)"
 	@$(MAKE) -C libft > /dev/null 2>&1
 	@printf "\n$(VALID) - libft: comilation terminée \t✅$(RESET)\n"
@@ -40,10 +38,10 @@ fclean: clean
 
 re: fclean all
 
-clist:
+listC:
 	@find -wholename "./srcs/*.c" | cut -c 3- | tr '\n' ' '
 
-cnb:
+nbC:
 	@find -wholename "./srcs/*.c" | wc -l
 
 .PHONY: all clean fclean re clist cnb
