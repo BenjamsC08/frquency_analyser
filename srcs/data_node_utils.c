@@ -1,11 +1,10 @@
 #include "xor_dcode.h"
 
-int	add_data_node(t_list **head, char *str, int pos)
+int	add_data_node(t_list *last, char *str, int pos)
 {
 	t_data_node	*data;
 	t_list		*new;
 
-	ft_dprintf(2, "%sDEBUG tu rentre bien\n", YELLOW, RESET);
 	data = ft_calloc(1, sizeof(t_data_node));
 	if (!data)
 		return (0);
@@ -25,8 +24,7 @@ int	add_data_node(t_list **head, char *str, int pos)
 	new = ft_lstnew(data);
 	if (!new)
 		free_data_node(data);
-	ft_lstadd_back(head, new);
-	ft_dprintf(2, "%sDEBUG tu resort pas\n", YELLOW, RESET);
+	ft_lstadd_back(&last, new);
 	return (1);
 }
 

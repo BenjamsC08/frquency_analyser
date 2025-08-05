@@ -70,3 +70,6 @@ void	ft_lstiter(t_list *lst, void (*f)(void *, char *), char *str)
 
 
 je dois pouvoir init t_list dans mon main 
+
+
+

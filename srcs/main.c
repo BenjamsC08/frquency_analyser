@@ -29,8 +29,6 @@ t_data	*init_data(int argc, char **argv, t_data *data)
 	data->max_threads = 6;
 	data->char_by_thread = CHAR_MIN_BY_THREADS;
 	data->nb_threads = 1;
-	if (pthread_mutex_init(&data->list_mtx, NULL) != 0)
-        return (free(data->text), NULL);
 	return (data);
 }
 
@@ -68,11 +66,10 @@ int main(int argc, char **argv)
     if (!head)
         return (free(data.text), 1);
     data.head = &head;
-    /*if (!create_threads(&data))*/
-        /*return free(data.text), destroy_list(&head), 1;*/
+    if (!create_threads(&data))
+        return free(data.text), destroy_list(&head), 1;
     print_list(data.head);
     destroy_list(data.head);
-    /*pthread_mutex_destroy(&data.list_mtx);*/
     free(data.text);
     return (0);
 }

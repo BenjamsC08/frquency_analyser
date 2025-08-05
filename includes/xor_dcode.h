@@ -12,7 +12,7 @@ char	*hex_format(char *str, int type);
 // char	**split_for_threads(t_data *data);
 int		create_threads(t_data *data);
 //	data_node_utils.c
-int		add_data_node(t_list **head, char *str, int pos);
+int		add_data_node(t_list *last, char *str, int pos);
 int		update_data_node(t_data_node *data, int pos);
 void    *extract_data_node(void *ptr_data, char type);
 void    free_data_node(void *data);
