@@ -5,7 +5,7 @@ int	add_data_node(t_list **head, char *str, int pos)
 	t_data_node	*data;
 	t_list		*new;
 
-	ft_fprintf(2, "%sDEBUG tu rentre bien\n", YELLOW, RESET);
+	ft_dprintf(2, "%sDEBUG tu rentre bien\n", YELLOW, RESET);
 	data = ft_calloc(1, sizeof(t_data_node));
 	if (!data)
 		return (0);
@@ -26,7 +26,7 @@ int	add_data_node(t_list **head, char *str, int pos)
 	if (!new)
 		free_data_node(data);
 	ft_lstadd_back(head, new);
-	ft_fprintf(2, "%sDEBUG tu resort pas\n", YELLOW, RESET);
+	ft_dprintf(2, "%sDEBUG tu resort pas\n", YELLOW, RESET);
 	return (1);
 }
 

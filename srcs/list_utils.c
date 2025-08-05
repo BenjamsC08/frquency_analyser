@@ -31,11 +31,11 @@ void	print_list(t_list **head)
 		i = -1;
 		count = (*(int *)extract_data_node(current->content, COUNT));
 		pos = (int *)extract_data_node(current->content, POS);
-		ft_fprintf(1, "trigram :'%s', count :'%d', ", (char *)extract_data_node(current->content, TRIGRAM),
+		ft_dprintf(1, "trigram :'%s', count :'%d', ", (char *)extract_data_node(current->content, TRIGRAM),
 			 count);
 		while (++i < count)
-			ft_fprintf(1, "pos[%d]=%d, ", i, pos[i]);
-		ft_fprintf(1,"\n");
+			ft_dprintf(1, "pos[%d]=%d, ", i, pos[i]);
+		ft_dprintf(1,"\n");
 		current = current->next;
 	}
 }

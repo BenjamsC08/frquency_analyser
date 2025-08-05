@@ -9,10 +9,10 @@ char	**split_for_threads(t_data *data)
 
 	str = data->text + 1;
 	l = ft_strlen(str);
-	ft_fprintf(2, "%sDEBUG l:'%d', str:'%s'%s\n", ORANGE, l, str, RESET);
+	ft_dprintf(2, "%sDEBUG l:'%d', str:'%s'%s\n", ORANGE, l, str, RESET);
 	if (l == 0)
 	{
-		ft_fprintf(2, "%sDEBUG What%s\n", GREEN, RESET);
+		ft_dprintf(2, "%sDEBUG What%s\n", GREEN, RESET);
 		return (NULL);
 	}
 	if (l < CHAR_MIN_BY_THREADS)
@@ -41,7 +41,7 @@ char	**split_for_threads(t_data *data)
 			data->char_by_thread);
 		n++;
 	}
-	ft_fprintf(2, "%sDEBUG l:'%d', str:'%s'%s\n", PURPLE, l, str, RESET);
+	ft_dprintf(2, "%sDEBUG l:'%d', str:'%s'%s\n", PURPLE, l, str, RESET);
 	return (strs);
 }
 
@@ -102,12 +102,12 @@ void explode_sample(t_reader *data, char *sample, t_ulong pos)
         }
         pthread_mutex_unlock(mutex);
         current = current->next;
-		ft_fprintf(2, "%sDEBUG palapls\n", YELLOW, RESET);
+		ft_dprintf(2, "%sDEBUG palapls\n", YELLOW, RESET);
     }
-	ft_fprintf(2, "%sDEBUG bien ICI\n", GREEN, RESET);
+	ft_dprintf(2, "%sDEBUG bien ICI\n", GREEN, RESET);
 
     pthread_mutex_lock(&((t_data *)data->h_list)->list_mtx);
-	ft_fprintf(2, "%sDEBUG tu rentre pas\n", YELLOW, RESET);
+	ft_dprintf(2, "%sDEBUG tu rentre pas\n", YELLOW, RESET);
     add_data_node(data->h_list, sample, pos);
     pthread_mutex_unlock(&((t_data *)data->h_list)->list_mtx);
 }
@@ -133,9 +133,9 @@ void	*routines(void *ptr_data)
 	{
 		explode_sample(data, &data->sample[i], i);
 		i++;
-		ft_fprintf(2, "%sDEBUG pq la i:'%d'\n", YELLOW, i, RESET);
+		ft_dprintf(2, "%sDEBUG pq la i:'%d'\n", YELLOW, i, RESET);
 	}
-	ft_fprintf(2, "%sDEBUG ICI\n", BLUE, RESET);
+	ft_dprintf(2, "%sDEBUG ICI\n", BLUE, RESET);
 	destroy_reader(data);
 	return (NULL);
 }
@@ -158,13 +158,13 @@ int create_threads(t_data *data)
         data_p = init_data_threads(data, samples[i]);
         pthread_create(&data->threads[i], NULL, routines, data_p);
     }
-	ft_fprintf(2, "%sDEBUG LA\n", YELLOW, RESET);
+	ft_dprintf(2, "%sDEBUG LA\n", YELLOW, RESET);
     i = -1;
     while (++i < data->nb_threads)
 	{
 		pthread_join(data->threads[i], NULL);
 	}
-	ft_fprintf(2, "%sDEBUG maybe\n", PINK, RESET);
+	ft_dprintf(2, "%sDEBUG maybe\n", PINK, RESET);
     free_strs(samples);
     return (1);
 }
