@@ -52,12 +52,9 @@ void	*routines(void *ptr_data)
 		k = 1;
 	else
 		k = 0;
-	i = 0;
-	while (i < data->length - 3)
-	{
+	i = -1;
+	while (++i < data->length - 3)
 		explode_sample(data, &data->sample[i], i + k);
-		i++;
-	}
 	destroy_reader(data);
 	return (NULL);
 }
@@ -67,7 +64,6 @@ int create_threads(t_data *data)
     char **samples;
     int i;
     t_reader *data_p;
-	t_mtx	  tmp;
 
     samples = split_for_threads(data);
     if (!samples)
@@ -76,10 +72,9 @@ int create_threads(t_data *data)
     if (!data->threads)
         return (free_strs(samples), 0);
     i = -1;
-	pthread_mutex_init(&tmp, NULL);
     while (++i < data->nb_threads)
     {
-        data_p = init_data_threads(data, samples[i], &tmp, i);
+        data_p = init_data_threads(data, samples[i], i);
 		data_p->char_by_thread = data->char_by_thread;
         pthread_create(&data->threads[i], NULL, routines, data_p);
     }

@@ -23,7 +23,7 @@ t_list *init_head(char *tri)
     return (ft_lstnew(data));
 }
 
-t_reader *init_data_threads(t_data *data, char *str, t_mtx *mtx, int i)
+t_reader *init_data_threads(t_data *data, char *str, int i)
 {
     t_reader *thread = ft_calloc(1, sizeof(t_reader));
     if (!thread)
@@ -35,6 +35,5 @@ t_reader *init_data_threads(t_data *data, char *str, t_mtx *mtx, int i)
 	free(str);
     thread->h_list = data->head;
 	thread->id = i;
-	thread->tmp_mtx = mtx;
     return (thread);
 }

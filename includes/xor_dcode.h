@@ -10,7 +10,7 @@ char		*ft_str_insert(char *str, char *to_insert, int step);
 char		*hex_format(char *str, int type);
 //	inits.c
 t_list		*init_head(char *tri);
-t_reader	*init_data_threads(t_data *data, char *str, t_mtx *mtx, int i);
+t_reader	*init_data_threads(t_data *data, char *str, int i);
 //	multi-threading
 int			create_threads(t_data *data);
 //	data_node_utils.c

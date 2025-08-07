@@ -52,7 +52,6 @@ typedef struct s_reader
 	char	*sample;
 	t_ulong	length;
 	t_list	**h_list;
-	t_mtx	*tmp_mtx;
 }			t_reader;
 
 
