@@ -31,7 +31,7 @@ void explode_sample(t_reader *data, char *sample, t_ulong pos)
 	}
 }
 
-void	*counting_routines(void *ptr_data)
+void	*counting_routine(void *ptr_data)
 {
 	t_reader		*data;
 	t_ulong			i;
@@ -48,7 +48,7 @@ void	*counting_routines(void *ptr_data)
 	return (NULL);
 }
 
-void	*destroy_routines(void *ptr_data)
+void	*destroy_routine(void *ptr_data)
 {
 	t_reader	*data;
 
@@ -108,15 +108,10 @@ int create_threads(t_data *data)
 	i = -1;
 	while (++i < data->nb_threads)
 		data_threads[i] = init_data_threads(data, samples[i], i);
-	i = -1;
-	instantiate_threads(data, data_threads, counting_routines);
-	i = -1;
-	instantiate_threads(data, data_threads, destroy_routines);
+	instantiate_threads(data, data_threads, counting_routine);
+	instantiate_threads(data, data_threads, destroy_routine);
 	free(data->threads);
 	data->threads = NULL;
-	// i = -1;
-	// while (++i < data->nb_threads)
-	// 	free(data_threads[i]);
 	free(data_threads);
 	free(samples);
 	return (1);
