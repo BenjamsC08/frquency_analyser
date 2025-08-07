@@ -31,16 +31,6 @@ void explode_sample(t_reader *data, char *sample, t_ulong pos)
 	}
 }
 
-void	destroy_reader(t_reader *data)
-{
-	if (data->sample)
-		free(data->sample);
-	data->length = 0;
-	data->h_list = NULL;
-	free(data);
-	data = NULL;
-}
-
 void	*counting_routines(void *ptr_data)
 {
 	t_reader		*data;
@@ -62,19 +52,30 @@ void	*destroy_routines(void *ptr_data)
 {
 	t_reader	*data;
 
+	if (!ptr_data)
+		return (NULL);
 	data = (t_reader *)ptr_data;
-	destroy_reader(data);
+	if (!data)
+		return (NULL);
+	if (data->sample)
+	{
+		free(data->sample);
+		data->sample = NULL;
+	}
+	data->length = 0;
+	data->h_list = NULL;
+	data = NULL;
 	return (NULL);
 }
 
 // 
-void	*sorting_routines(void *ptr_data)
-{
-
-	t_reader	*data;
-
-	data = (t_reader *)ptr_data;
-}
+// void	*sorting_routines(void *ptr_data)
+// {
+//
+// 	t_reader	*data;
+//
+// 	data = (t_reader *)ptr_data;
+// }
 
 void	instantiate_threads(t_data *data, t_reader *data_p, void *(*routines)(void *))
 {
@@ -91,20 +92,33 @@ void	instantiate_threads(t_data *data, t_reader *data_p, void *(*routines)(void 
 int create_threads(t_data *data)
 {
 	char		**samples;
-	t_reader	*data_p;
+	t_reader	**data_threads;
 	int			i;
 
 	samples = split_for_threads(data);
 	if (!samples)
 		return (0);
+	data_threads = ft_calloc(data->nb_threads, sizeof(t_reader));
+	if (!data_threads)
+		return (free_strs(samples), 0);
 	data->threads = ft_calloc(data->nb_threads, sizeof(pthread_t));
 	if (!data->threads)
-		return (free_strs(samples), 0);
+		return (free(data_threads), free_strs(samples), 0);
 	i = -1;
 	while (++i < data->nb_threads)
-		data_p = init_data_threads(data, samples[i], i);
-	instantiate_threads(data, data_p, counting_routines);
+		data_threads[i] = init_data_threads(data, samples[i], i);
+	i = -1;
+	while (++i < data->nb_threads)
+		instantiate_threads(data, data_threads[i], counting_routines);
+	i = -1;
+	while (++i < data->nb_threads)
+		instantiate_threads(data, data_threads[i], destroy_routines);
+	free(data->threads);
+	data->threads = NULL;
+	i = -1;
+	while (++i < data->nb_threads)
+		free(data_threads[i]);
+	free(data_threads);
 	free(samples);
-	instantiate_threads(data, data_p, destroy_routines);
 	return (1);
 }

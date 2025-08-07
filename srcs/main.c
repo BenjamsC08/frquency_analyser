@@ -49,7 +49,6 @@ int main(int argc, char **argv)
 	ft_dprintf(2, "%s%d threads used%s\n", ORANGE, data.nb_threads, RESET);
 	ft_dprintf(2, "%sthe size of the list %d nodes%s\n", YELLOW, ft_lstsize(head), RESET);
     destroy_list(data.head);
-	free(data.threads);
     free(data.text);
     return (0);
 }
