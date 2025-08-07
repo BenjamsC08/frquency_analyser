@@ -55,8 +55,25 @@ void	*counting_routines(void *ptr_data)
 	i = -1;
 	while (++i < data->length - 3)
 		explode_sample(data, &data->sample[i], i + k);
+	return (NULL);
+}
+
+void	*destroy_routines(void *ptr_data)
+{
+	t_reader	*data;
+
+	data = (t_reader *)ptr_data;
 	destroy_reader(data);
 	return (NULL);
+}
+
+// 
+void	*sorting_routines(void *ptr_data)
+{
+
+	t_reader	*data;
+
+	data = (t_reader *)ptr_data;
 }
 
 void	instantiate_threads(t_data *data, t_reader *data_p, void *(*routines)(void *))
@@ -88,5 +105,6 @@ int create_threads(t_data *data)
 		data_p = init_data_threads(data, samples[i], i);
 	instantiate_threads(data, data_p, counting_routines);
 	free(samples);
+	instantiate_threads(data, data_p, destroy_routines);
 	return (1);
 }
