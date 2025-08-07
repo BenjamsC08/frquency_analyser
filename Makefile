@@ -1,7 +1,7 @@
 CC = cc
 FLAGS = -g -Wall -Wextra -Werror
 NAME = prog
-SRCS = srcs/main.c srcs/data_node_utils.c srcs/multi-thread.c srcs/list_utils.c srcs/hex_parsing.c
+SRCS = srcs/hex_parsing.c srcs/list_utils.c srcs/main.c srcs/multi-thread.c srcs/data_node_utils.c srcs/inits.c
 OBJ = $(SRCS:.c=.o)
 LIB_PATH = -Llibft
 LIB_NAME = -lft

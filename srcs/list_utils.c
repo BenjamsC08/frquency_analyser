@@ -1,5 +1,45 @@
 #include "xor_dcode.h"
 
+char	**split_for_threads(t_data *data)
+{
+	int		l;
+	int		n;
+	char	*str;
+	char	**strs;
+
+	str = data->text + 1;
+	l = ft_strlen(str);
+	if (l == 0)
+		return (NULL);
+	if (l < CHAR_MIN_BY_THREADS)
+	{
+		data->char_by_thread = l;
+		data->nb_threads = 1;
+	}
+	else if (l / CHAR_MIN_BY_THREADS > data->max_threads)
+	{
+		data->char_by_thread = l / data->max_threads;
+		data->nb_threads = data->max_threads;
+	}
+	else
+	{
+		data->nb_threads = (l / CHAR_MIN_BY_THREADS);
+		data->char_by_thread = (l / data->nb_threads);
+	}
+	n = 0;
+	strs = ft_calloc(data->nb_threads, sizeof(char *));
+	if (!strs)
+		return (NULL);
+	while (n < data->nb_threads)
+	{
+		strs[n] = ft_strndup(
+			(const char *)(str + (data->char_by_thread * n)),
+			data->char_by_thread);
+		n++;
+	}
+	return (strs);
+}
+
 void	destroy_list(t_list **head)
 {
 	t_list	*current;

@@ -1,7 +1,7 @@
 #include "xor_dcode.h"
 
 
-static char	*get_hex(int argc, char **argv)
+static char	*get_hex(int argc, char **argv) // temp fuc quotes in the next one
 {
 	char	*str;
 	char	*out;
@@ -30,29 +30,6 @@ t_data	*init_data(int argc, char **argv, t_data *data)
 	data->char_by_thread = CHAR_MIN_BY_THREADS;
 	data->nb_threads = 1;
 	return (data);
-}
-
-t_list *init_head(char *tri)
-{
-    t_data_node *data;
-
-    data = ft_calloc(1, sizeof(t_data_node));
-    if (!data)
-        return (NULL);
-    data->trigram = ft_strndup(tri, 3);
-    if (!data->trigram)
-        return (free(data), NULL);
-    data->count = 1;
-    data->mtx_node = ft_calloc(1, sizeof(t_mtx));
-    if (!data->mtx_node)
-        return (free(data->trigram), free(data), NULL);
-    if (pthread_mutex_init(data->mtx_node, NULL) != 0)
-        return (free_data_node(data), NULL);
-    data->pos = ft_calloc(1, sizeof(int));
-    if (!data->pos)
-        return (free_data_node(data), NULL);
-    data->pos[0] = 0;
-    return (ft_lstnew(data));
 }
 
 int main(int argc, char **argv)

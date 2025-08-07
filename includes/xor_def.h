@@ -43,17 +43,17 @@ typedef struct s_data_node
 	int		count;
 	int		*pos;
 	t_mtx	*mtx_node;
-} t_data_node;
+}			t_data_node;
 
 typedef struct s_reader
 {
 	int		id;
-	int			char_by_thread;
+	int		char_by_thread;
 	char	*sample;
 	t_ulong	length;
 	t_list	**h_list;
 	t_mtx	*tmp_mtx;
-} t_reader;
+}			t_reader;
 
 
 #endif

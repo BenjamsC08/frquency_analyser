@@ -51,14 +51,12 @@ char	*reset_hex(char *str)
 char	*ft_str_insert(char *str, char *to_insert, int step)
 {
 	char	*out;
-	/*char	*o;*/
 	int		k;
 
 	k = ft_strlen(str);
 	out = ft_calloc(sizeof(char), sizeof(char *));
 	if (!out)
 		return (NULL);
-	/*o = out;*/
 	k = 0;
 	while (str[k])
 	{
