@@ -87,7 +87,6 @@ int create_threads(t_data *data)
 	while (++i < data->nb_threads)
 		data_p = init_data_threads(data, samples[i], i);
 	instantiate_threads(data, data_p, counting_routines);
-	ft_dprintf(2, "%suse %d threads%s\n", ORANGE, data->nb_threads, RESET);
 	free(samples);
 	return (1);
 }

@@ -46,6 +46,7 @@ int main(int argc, char **argv)
     if (!create_threads(&data))
         return free(data.text), destroy_list(&head), 1;
     print_list(data.head);
+		ft_dprintf(2, "%s%d threads used%s\n", ORANGE, data.nb_threads, RESET);
     destroy_list(data.head);
 	free(data.threads);
     free(data.text);
