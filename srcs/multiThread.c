@@ -64,6 +64,7 @@ void	*destroy_routines(void *ptr_data)
 	}
 	data->length = 0;
 	data->h_list = NULL;
+	free(data);
 	data = NULL;
 	return (NULL);
 }
@@ -77,13 +78,13 @@ void	*destroy_routines(void *ptr_data)
 // 	data = (t_reader *)ptr_data;
 // }
 
-void	instantiate_threads(t_data *data, t_reader *data_p, void *(*routines)(void *))
+void	instantiate_threads(t_data *data, t_reader **data_p, void *(*routines)(void *))
 {
 	int i;
 
 	i = -1;
 	while (++i < data->nb_threads)
-		pthread_create(&data->threads[i], NULL, routines, data_p);
+		pthread_create(&data->threads[i], NULL, routines, data_p[i]);
 	i = -1;
 	while (++i < data->nb_threads)
 		pthread_join(data->threads[i], NULL);
@@ -108,16 +109,14 @@ int create_threads(t_data *data)
 	while (++i < data->nb_threads)
 		data_threads[i] = init_data_threads(data, samples[i], i);
 	i = -1;
-	while (++i < data->nb_threads)
-		instantiate_threads(data, data_threads[i], counting_routines);
+	instantiate_threads(data, data_threads, counting_routines);
 	i = -1;
-	while (++i < data->nb_threads)
-		instantiate_threads(data, data_threads[i], destroy_routines);
+	instantiate_threads(data, data_threads, destroy_routines);
 	free(data->threads);
 	data->threads = NULL;
-	i = -1;
-	while (++i < data->nb_threads)
-		free(data_threads[i]);
+	// i = -1;
+	// while (++i < data->nb_threads)
+	// 	free(data_threads[i]);
 	free(data_threads);
 	free(samples);
 	return (1);
