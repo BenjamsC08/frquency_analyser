@@ -35,5 +35,6 @@ t_reader *init_data_threads(t_data *data, char *str, int i)
 	free(str);
     thread->h_list = data->head;
 	thread->id = i;
+	thread->char_by_thread = data->char_by_thread;
     return (thread);
 }
