@@ -69,10 +69,9 @@ void	*destroy_routine(void *ptr_data)
 	return (NULL);
 }
 
-// 
+
 // void	*sorting_routines(void *ptr_data)
 // {
-//
 // 	t_reader	*data;
 //
 // 	data = (t_reader *)ptr_data;
@@ -105,12 +104,20 @@ int create_threads(t_data *data)
 	data->threads = ft_calloc(data->nb_threads, sizeof(pthread_t));
 	if (!data->threads)
 		return (free(data_threads), free_strs(samples), 0);
+	t_mtx *tmp = ft_calloc(1, sizeof(t_mtx));
+	if (!tmp)
+		return (free(data_threads), free_strs(samples), free(data->threads), 0);
+	if (pthread_mutex_init(tmp, NULL) != 0)
+		return (free(data_threads), free_strs(samples), free(data->threads), free(tmp), 0);
 	i = -1;
 	while (++i < data->nb_threads)
-		data_threads[i] = init_data_threads(data, samples[i], i);
+		data_threads[i] = init_data_threads(data, samples[i], i, &tmp);
 	instantiate_threads(data, data_threads, counting_routine);
 	instantiate_threads(data, data_threads, destroy_routine);
 	free(data->threads);
+	pthread_mutex_destroy(tmp);
+	free(tmp);
+	tmp = NULL;
 	data->threads = NULL;
 	free(data_threads);
 	free(samples);

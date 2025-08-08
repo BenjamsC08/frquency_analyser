@@ -50,6 +50,7 @@ typedef struct s_reader
 	int		id;
 	int		char_by_thread;
 	char	*sample;
+	t_mtx	*reader_mtx;
 	t_ulong	length;
 	t_list	**h_list;
 }			t_reader;
