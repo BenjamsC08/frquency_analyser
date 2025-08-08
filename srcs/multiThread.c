@@ -1,6 +1,6 @@
 #include "xor_dcode.h"
 
-void	instantiate_threads(t_data *data, t_reader **data_p, void *(*routines)(void *))
+void	launch_threads(t_data *data, t_reader **data_p, void *(*routines)(void *))
 {
 	int i;
 
@@ -35,9 +35,9 @@ int create_threads(t_data *data)
 	i = -1;
 	while (++i < data->nb_threads)
 		data_threads[i] = init_data_threads(data, samples[i], i, &mtx_reader);
-	instantiate_threads(data, data_threads, counting_routine);
-	instantiate_threads(data, data_threads, sorting_routines);
-	instantiate_threads(data, data_threads, destroy_routine);
+	launch_threads(data, data_threads, counting_routine);
+	launch_threads(data, data_threads, sorting_routines);
+	launch_threads(data, data_threads, destroy_routine);
 	free(data->threads);
 	pthread_mutex_destroy(mtx_reader);
 	free(mtx_reader);
