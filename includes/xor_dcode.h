@@ -11,6 +11,10 @@ char		*hex_format(char *str, int type);
 //	inits.c
 t_list		*init_head(char *tri);
 t_reader	*init_data_threads(t_data *data, char *str, int i, t_mtx **mutex);
+//	routines.c
+void	*counting_routine(void *ptr_data);
+void	*sorting_routines(void *ptr_data);
+void	*destroy_routine(void *ptr_data);
 //	multi-threading
 int			create_threads(t_data *data);
 //	data_node_utils.c
