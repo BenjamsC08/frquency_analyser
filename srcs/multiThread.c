@@ -69,13 +69,49 @@ void	*destroy_routine(void *ptr_data)
 	return (NULL);
 }
 
+/*	cree un static int pour compter le nombre de threads qui passe pour pouvoir
+faire en sorte que le premier aie trie le node n - 1 puis le 2e n-2 etc et avancer de n a chaque fois */
 
-// void	*sorting_routines(void *ptr_data)
-// {
-// 	t_reader	*data;
-//
-// 	data = (t_reader *)ptr_data;
-// }
+static t_list *get_unsorted_node(t_reader *data)
+{
+	t_list		*current;
+
+	current = *(data->h_list);
+	pthread_mutex_lock(data->reader_mtx);
+	while (current)
+	{
+		t_bool *sorted = (t_bool *)extract_data_node(current->content, SORTED);
+		if (*sorted == FALSE)
+		{
+			*sorted = TRUE;
+			return (pthread_mutex_unlock(data->reader_mtx), current);
+		}
+		current = current->next;
+	}
+	pthread_mutex_unlock(data->reader_mtx);
+	return (NULL);
+}
+
+void	*sorting_routines(void *ptr_data)
+{
+	t_reader	*data;
+	t_list		*current;
+
+	data = (t_reader *)ptr_data;
+	while (1)
+	{
+		current = get_unsorted_node(data);
+		if (!current)
+			break ;
+		t_mtx *mutex = (t_mtx *)extract_data_node(current->content, MTX);
+		pthread_mutex_lock(mutex);
+		int	*pos = (int *)extract_data_node(current->content, POS);
+		int	*count = (int *)extract_data_node(current->content, COUNT);
+		ft_quicksort(pos, *count);
+		pthread_mutex_unlock(mutex);
+	}
+	return (NULL);
+}
 
 void	instantiate_threads(t_data *data, t_reader **data_p, void *(*routines)(void *))
 {
@@ -113,6 +149,7 @@ int create_threads(t_data *data)
 	while (++i < data->nb_threads)
 		data_threads[i] = init_data_threads(data, samples[i], i, &tmp);
 	instantiate_threads(data, data_threads, counting_routine);
+	instantiate_threads(data, data_threads, sorting_routines);
 	instantiate_threads(data, data_threads, destroy_routine);
 	free(data->threads);
 	pthread_mutex_destroy(tmp);

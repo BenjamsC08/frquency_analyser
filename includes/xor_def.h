@@ -16,6 +16,7 @@
 #define POS 'P'
 #define MTX 'M'
 #define COUNT 'C'
+#define SORTED 'S'
 
 #define CHAR_MIN_BY_THREADS 1024
 
@@ -42,6 +43,7 @@ typedef struct s_data_node
 	char	*trigram;
 	int		count;
 	int		*pos;
+	t_bool	sorted;
 	t_mtx	*mtx_node;
 }			t_data_node;
 

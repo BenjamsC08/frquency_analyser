@@ -16,6 +16,7 @@ int	add_data_node(t_list *last, char *str, int pos)
 	if (!data->pos)
 		return (free_data_node(data), 0);
 	data->pos[0] = pos;
+	data->sorted = FALSE;
 	data->mtx_node = ft_calloc(1, sizeof(t_mtx));
 	if (!data->mtx_node)
 		return (free_data_node(data), 0);
@@ -59,6 +60,8 @@ void	*extract_data_node(void *ptr_data, char type)
 		return (data->mtx_node);
 	if (type == COUNT)
 		return (&data->count);
+	if (type == SORTED)
+		return (&data->sorted);
 	return (NULL);
 }
 
@@ -77,6 +80,7 @@ void	free_data_node(void *ptr_data)
 	{
 		pthread_mutex_destroy(data->mtx_node);
 		free(data->mtx_node);
+		data->mtx_node = NULL;
 	}
 	free(data);
 }

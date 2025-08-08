@@ -3,3 +3,28 @@
 - sort list from biggest count to lowest 
 - reperer les frequence de repetition
 -print les clee en fonction de la longueur demander
+
+
+
+probleme a regler il ne va pas jusqu'a la fin exemple 
+0x120x340x560x780x900xab0xcd0xef0x120x340x560x780x900xab0xcd0xef
+
+donne :
+trigram :'123', count :'2', pos[0]=0, pos[1]=16, 
+trigram :'234', count :'2', pos[0]=1, pos[1]=17, 
+trigram :'345', count :'2', pos[0]=2, pos[1]=18, 
+trigram :'456', count :'2', pos[0]=3, pos[1]=19, 
+trigram :'567', count :'2', pos[0]=4, pos[1]=20, 
+trigram :'678', count :'2', pos[0]=5, pos[1]=21, 
+trigram :'789', count :'2', pos[0]=6, pos[1]=22, 
+trigram :'890', count :'2', pos[0]=7, pos[1]=23, 
+trigram :'90a', count :'2', pos[0]=8, pos[1]=24, 
+trigram :'0ab', count :'2', pos[0]=9, pos[1]=25, 
+trigram :'abc', count :'2', pos[0]=10, pos[1]=26, 
+trigram :'bcd', count :'2', pos[0]=11, pos[1]=27, 
+trigram :'cde', count :'2', pos[0]=12, pos[1]=28, 
+trigram :'def', count :'1', pos[0]=13, 
+trigram :'ef1', count :'1', pos[0]=14, 
+trigram :'f12', count :'1', pos[0]=15,
+
+il manque 1 def
