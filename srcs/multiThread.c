@@ -43,7 +43,7 @@ void	*counting_routine(void *ptr_data)
 	else
 		k = 0;
 	i = -1;
-	while (++i < data->length - 3)
+	while (++i < data->length - 2)
 		explode_sample(data, &data->sample[i], i + k);
 	return (NULL);
 }
