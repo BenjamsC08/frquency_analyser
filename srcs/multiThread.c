@@ -38,10 +38,10 @@ int create_threads(t_data *data)
 	launch_threads(data, data_threads, counting_routine);
 	launch_threads(data, data_threads, sorting_routines);
 	launch_threads(data, data_threads, destroy_routine);
-	free(data->threads);
 	pthread_mutex_destroy(mtx_reader);
 	free(mtx_reader);
 	mtx_reader = NULL;
+	free(data->threads);
 	data->threads = NULL;
 	free(data_threads);
 	free(samples);
