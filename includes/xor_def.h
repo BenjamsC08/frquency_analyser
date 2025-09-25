@@ -36,6 +36,7 @@ typedef struct s_data
 	int			nb_threads;
 	pthread_t	*threads;
 	t_list		**head;
+	t_uint		nb_trigrams;	  //count for all trigram
 }				t_data;
 
 typedef struct s_data_node

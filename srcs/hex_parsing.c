@@ -94,6 +94,9 @@ char	*hex_format(char *str, int type)
 	out = reset_hex(str);
 	if (!out)
 		return (NULL);
+	if (ft_strlen(out) % 2 != 0)
+		return (NULL);
+	ft_lowerise(&out);
 	if (type == ONE_LINE)
 		return (out);
 	to_insert = get_to_insert(type);

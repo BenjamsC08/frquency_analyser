@@ -29,7 +29,19 @@ t_data	*init_data(int argc, char **argv, t_data *data)
 	data->max_threads = 6;
 	data->char_by_thread = CHAR_MIN_BY_THREADS;
 	data->nb_threads = 1;
+	data->nb_trigrams = ft_strlen(data->text) - 2;
 	return (data);
+}
+
+int	compare_node(void *left, void *right)
+{
+	t_data_node *l_node = (t_data_node *)left;
+	t_data_node *r_node = (t_data_node *)right;
+
+	if (l_node->count - r_node->count != 0)
+		return (l_node->count - r_node->count);
+	else
+		return (ft_strcmp(l_node->trigram, r_node->trigram));
 }
 
 int main(int argc, char **argv)
@@ -45,6 +57,9 @@ int main(int argc, char **argv)
     data.head = &head;
     if (!create_threads(&data))
         return free(data.text), destroy_list(&head), 1;
+    print_list(data.head);
+	lst_merge_sort(*data.head, &compare_node);
+	ft_printf("\n");
     print_list(data.head);
 	ft_dprintf(2, "%s%d threads used%s\n", ORANGE, data.nb_threads, RESET);
 	ft_dprintf(2, "%sthe size of the list %d nodes%s\n", YELLOW, ft_lstsize(head), RESET);
