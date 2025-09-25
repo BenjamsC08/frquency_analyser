@@ -1,6 +1,6 @@
 CC = cc
 FLAGS = -g -Wall -Wextra -Werror
-NAME = prog
+NAME = xorC
 SRCS = srcs/hex_parsing.c srcs/list_utils.c srcs/multiThread.c srcs/main.c srcs/data_node_utils.c srcs/inits.c srcs/routines.c
 OBJ = $(SRCS:.c=.o)
 LIB_PATH = -Llibft
