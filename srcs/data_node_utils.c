@@ -29,7 +29,7 @@ int	add_data_node(t_list *last, char *str, int pos)
 	return (1);
 }
 
-int	update_data_node(t_data_node *data, int pos)
+int	update_data_node(int id, t_data_node *data, int pos)
 {
 	int	*new_pos;
 	int	i;
@@ -41,7 +41,10 @@ int	update_data_node(t_data_node *data, int pos)
 	i = -1;
 	while (++i < (data->count - 1))
 		new_pos[i] = data->pos[i];
-	new_pos[i] = pos;
+	if (id == 0)
+		new_pos[i] = pos;
+	else
+		new_pos[i] = pos;
 	free(data->pos);
 	data->pos = new_pos;
 	return (1);

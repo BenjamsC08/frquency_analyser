@@ -7,16 +7,17 @@ void	*counting_routine(void *ptr_data)
 {
 	t_reader		*data;
 	t_ulong			i;
-	t_ulong			k;
 
 	data = (t_reader *)ptr_data;
-	if (data->id == 0)
-		k = 1;
-	else
-		k = 0;
-	i = -1;
-	while (++i < data->length - 2)
-		explode_sample(data, &data->sample[i], i + k);
+	// if (data->id == 0)
+	// 	k = 1;
+	// else
+	// 	k = 0;
+	i = 0;
+	while (++i < data->length)
+	{
+		explode_sample(data, &data->sample[i], i);
+	}
 	return (NULL);
 }
 
@@ -78,13 +79,13 @@ static void explode_sample(t_reader *data, char *sample, t_ulong pos)
 		pthread_mutex_lock(mutex);
 		if (!ft_strncmp((char *)extract_data_node(current->content, TRIGRAM), sample, 3))
 		{
-			update_data_node(current->content, ((int)pos  + (data->id * data->char_by_thread)));
+			update_data_node(data->id, current->content, ((int)pos  + (data->id * data->char_by_thread)));
 			pthread_mutex_unlock(mutex);
 			return;
 		}
 		if (!current->next)
 		{
-			add_data_node(current, sample, (pos + (data->id * data->char_by_thread)));
+			add_data_node(current, sample, ((int)pos + (data->id * data->char_by_thread)));
 			pthread_mutex_unlock(mutex);
 			return;
 		}

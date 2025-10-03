@@ -30,6 +30,7 @@ t_data	*init_data(int argc, char **argv, t_data *data)
 	data->char_by_thread = CHAR_MIN_BY_THREADS;
 	data->nb_threads = 1;
 	data->nb_trigrams = ft_strlen(data->text) - 2;
+	ft_printf("%s%d%s\n", YELLOW, data->nb_trigrams ,RESET);
 	return (data);
 }
 
@@ -46,24 +47,23 @@ int	compare_node(void *left, void *right)
 
 int main(int argc, char **argv)
 {
-    t_data data;
-    t_list *head = NULL;
+	t_data data;
+	t_list *head = NULL;
 
-    if (!init_data(argc, argv, &data))
-        return (1);
-    head = init_head(data.text);
-    if (!head)
-        return (free(data.text), 1);
-    data.head = &head;
-    if (!create_threads(&data))
-        return free(data.text), destroy_list(&head), 1;
-    print_list(data.head);
+	if (!init_data(argc, argv, &data))
+		return (1);
+	head = init_head(data.text);
+	if (!head)
+		return (free(data.text), 1);
+	data.head = &head;
+	if (!create_threads(&data))
+		return free(data.text), destroy_list(&head), 1;
 	lst_merge_sort(*data.head, &compare_node);
 	ft_printf("\n");
-    print_list(data.head);
+	print_list(data.head);
 	ft_dprintf(2, "%s%d threads used%s\n", ORANGE, data.nb_threads, RESET);
 	ft_dprintf(2, "%sthe size of the list %d nodes%s\n", YELLOW, ft_lstsize(head), RESET);
-    destroy_list(data.head);
-    free(data.text);
-    return (0);
+	destroy_list(data.head);
+	free(data.text);
+	return (0);
 }

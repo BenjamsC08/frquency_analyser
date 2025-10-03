@@ -5,3 +5,6 @@ mandatory :
 	- sort list from biggest count to lowest (merge sort max 4096 nodes)
 	- mesurer les ecart (entre les positions) des trigrammes
 	- calculer le pgcd des ecarts observes (calcul de la longueur de la clee)
+
+lot of problem when multiple thread was on two last trigrammes was not explode something in init_data or counting routines need to be fixed
+
