@@ -95,7 +95,7 @@ char	*hex_format(char *str, int type)
 	if (!out)
 		return (NULL);
 	if (ft_strlen(out) % 2 != 0)
-		return (NULL);
+		return (free(out), NULL);
 	ft_lowerise(&out);
 	if (type == ONE_LINE)
 		return (out);
