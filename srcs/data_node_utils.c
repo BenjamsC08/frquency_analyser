@@ -1,3 +1,4 @@
+#include "libft.h"
 #include "xor_dcode.h"
 
 int	add_data_node(t_list *last, char *str, int pos)

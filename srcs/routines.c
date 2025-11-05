@@ -1,4 +1,6 @@
+#include "libft.h"
 #include "xor_dcode.h"
+#include <stdio.h>
 
 static void explode_sample(t_reader *data, char *sample, t_ulong pos);
 static t_list *get_unsorted_node(t_reader *data);
@@ -10,13 +12,17 @@ void	*counting_routine(void *ptr_data)
 
 	data = (t_reader *)ptr_data;
 	// if (data->id == 0)
-	// 	k = 1;
+	// 	i = 0;
 	// else
-	// 	k = 0;
-	i = 0;
+	i = -1;
 	while (++i < data->length)
 	{
+		// ft_printf("%strigram : %s\n%s", CYAN, &data->sample[i],RESET);
+		if (ft_strlen(&data->sample[i]) <= 2)
+			break;
 		explode_sample(data, &data->sample[i], i);
+		// if (!ft_strncmp(&data->sample[i], "f01", 3))
+		// 	print_list(data->h_list);
 	}
 	return (NULL);
 }
@@ -70,6 +76,7 @@ static void explode_sample(t_reader *data, char *sample, t_ulong pos)
 	if (!data || !data->h_list)
 		return;
 
+	// ft_printf("%strigram : %s\n%s", CYAN, sample, RESET);
 	current = *(data->h_list);
 	while (current)
 	{

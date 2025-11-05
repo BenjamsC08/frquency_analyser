@@ -40,7 +40,7 @@ int	compare_node(void *left, void *right)
 	t_data_node *r_node = (t_data_node *)right;
 
 	if (l_node->count - r_node->count != 0)
-		return (l_node->count - r_node->count);
+		return (r_node->count - l_node->count);
 	else
 		return (ft_strcmp(l_node->trigram, r_node->trigram));
 }
