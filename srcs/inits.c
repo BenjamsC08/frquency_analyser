@@ -7,7 +7,7 @@ t_list *init_head(char *tri)
     data = ft_calloc(1, sizeof(t_data_node));
     if (!data)
         return (NULL);
-    data->trigram = ft_strndup(tri, 3);
+    data->trigram = ft_strndup(tri, TRIGRAM_LENGTH);
     if (!data->trigram)
         return (free(data), NULL);
     data->count = 1;

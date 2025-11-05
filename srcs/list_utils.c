@@ -61,7 +61,7 @@ char	**split_for_threads(t_data *data)
 				data->char_by_thread + f);
 		}
 		n++;
-		f = 2;
+		f = TRIGRAM_LENGTH - 1;
 	}
 	return (strs);
 }

@@ -9,7 +9,7 @@ int	add_data_node(t_list *last, char *str, int pos)
 	data = ft_calloc(1, sizeof(t_data_node));
 	if (!data)
 		return (0);
-	data->trigram = ft_strndup(str, 3);
+	data->trigram = ft_strndup(str, TRIGRAM_LENGTH);
 	if (!data->trigram)
 		return (free_data_node(data), 0);
 	data->count = 1;
