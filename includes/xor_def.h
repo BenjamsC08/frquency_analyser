@@ -18,6 +18,8 @@
 #define COUNT 'C'
 #define SORTED 'S'
 
+#define DISP 1
+
 #define CHAR_MIN_BY_THREADS 1024
 
 typedef pthread_mutex_t t_mtx;

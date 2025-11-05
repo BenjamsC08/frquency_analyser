@@ -36,7 +36,6 @@ t_reader *init_data_threads(t_data *data, char *str, int i, t_mtx **mutex)
     thread->length = ft_strlen(str);
 	if (k > thread->length)
 		k = thread->length;
-	ft_printf("%s%d%s\n", BLUE, thread->length, RESET);
 	free(str);
 	thread->reader_mtx = *mutex;
     thread->h_list = data->head;
@@ -47,8 +46,6 @@ t_reader *init_data_threads(t_data *data, char *str, int i, t_mtx **mutex)
 		thread->start = 1;
 	else
 		thread->start = 1 + i * thread->length;
-
-	ft_printf("%s%d%s\n", GREEN, thread->start, RESET);
 
 	thread->char_by_thread = thread->length;
     return (thread);

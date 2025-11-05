@@ -34,10 +34,7 @@ int create_threads(t_data *data)
 		return (free(data_threads), free_strs(samples), free(data->threads), free(mtx_reader), 0);
 	i = -1;
 	while (++i < data->nb_threads)
-	{
-		ft_printf("%s%s%s\n", DARK_ORANGE, samples[i], RESET);
 		data_threads[i] = init_data_threads(data, samples[i], i, &mtx_reader);
-	}
 	launch_threads(data, data_threads, counting_routine);
 	launch_threads(data, data_threads, sorting_routines);
 	launch_threads(data, data_threads, destroy_routine);

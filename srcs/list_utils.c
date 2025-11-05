@@ -24,7 +24,6 @@ char	**split_for_threads(t_data *data)
 
 	str = data->text + 1;
 	l = ft_strlen(str);
-	ft_printf("%s%s%s\n", ORANGE, str, RESET);
 	if (l == 0)
 		return (NULL);
 	if (l < CHAR_MIN_BY_THREADS)
@@ -46,22 +45,23 @@ char	**split_for_threads(t_data *data)
 	strs = ft_calloc(data->nb_threads, sizeof(char *));
 	if (!strs)
 		return (NULL);
+	int f = 0;
 	while (n < data->nb_threads)
 	{
 		if (n + 1 == data->nb_threads)
 		{
 			strs[n] = ft_strndup(
-				(const char *)(str + (data->char_by_thread * n)),
-				ft_strlen((str + (data->char_by_thread * n))));
+				(const char *)((str - f) + (data->char_by_thread * n)),
+				ft_strlen((str + (data->char_by_thread * n))) + f);
 		}
 		else
 		{
 			strs[n] = ft_strndup(
-				(const char *)(str + (data->char_by_thread * n)),
-				data->char_by_thread);
+				(const char *)((str - f) + (data->char_by_thread * n)),
+				data->char_by_thread + f);
 		}
-		ft_printf("%s%s%s\n", PINK, strs[n], RESET);
 		n++;
+		f = 2;
 	}
 	return (strs);
 }
@@ -95,14 +95,18 @@ void	print_list(t_list **head)
 	{
 		count = (*(int *)extract_data_node(current->content, COUNT));
 		pos = (int *)extract_data_node(current->content, POS);
-		ft_dprintf(1, "trigram :'%s%s%s', count :'%s%d%s', ",
+		ft_dprintf(1, "trigram :'%s%s%s', count :'%s%d%s'",
 			 GREEN, (char *)extract_data_node(current->content, TRIGRAM), RESET,
 			 YELLOW, count, RESET);
-		ft_dprintf(1, "pos:[" );
-		int i = -1;
-		while (++i < count)
-			ft_dprintf(1, "%d, ", pos[i]);
-		ft_dprintf(1, "]\n");
+		if (DISP == 2)
+		{
+			ft_dprintf(1, ", pos:[" );
+			int i = -1;
+			while (++i < count)
+				ft_dprintf(1, "%d, ", pos[i]);
+			ft_dprintf(1, "]");
+		}
+		ft_dprintf(1, "\n");
 		current = current->next;
 	}
 }
