@@ -6,3 +6,4 @@ test*
 TEST*
 truc*
 compile_commands.json
+.cache
