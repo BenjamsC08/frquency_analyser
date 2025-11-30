@@ -1,0 +1,8 @@
+*.out
+*.a
+*.o
+*.d
+libft
+libft/*
+prog
+obj/
