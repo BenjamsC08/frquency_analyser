@@ -32,7 +32,7 @@ clean:
 	@printf "$(VALID) - clean \t\t\t✅$(RESET)\n"
 
 fclean: clean
-	@rm -f $(NAME)
+	@rm -f $(NAME) *.json
 	@$(MAKE) -C libft fclean > /dev/null 2>&1
 	@printf "$(VALID) - fclean \t\t\t✅$(RESET)\n"
 
