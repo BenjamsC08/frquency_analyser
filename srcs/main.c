@@ -3,26 +3,6 @@
 #include "xor_def.h"
 #include <stdio.h>
 
-
-static char	*get_hex(int argc, char **argv) // temp fuc quotes in the next one
-{
-	char	*str;
-	char	*out;
-
-	str = NULL;
-	if (argc == 1)
-		return (NULL);
-	if (argc >= 2)
-		str = ft_unsplit((++argv), 0);
-	if (!str)
-		return (NULL);
-	out = hex_format(str, 0);
-	free(str);
-	if (!out)
-		return (NULL);
-	return (out);
-}
-
 int config_file(int *max_threads, t_uint *size_ngrams)
 {
     FILE *f = fopen("config", "r");
@@ -73,11 +53,53 @@ int config_file(int *max_threads, t_uint *size_ngrams)
     return (1);
 }
 
-t_data	*init_data(int argc, char **argv, t_data *data)
+// static char	*get_hex(int argc, char **argv) // temp fuc quotes in the next one
+// {
+// 	char	*str;
+// 	char	*out;
+//
+// 	str = NULL;
+// 	if (argc == 1)
+// 		return (NULL);
+// 	if (argc >= 2)
+// 		str = ft_unsplit((++argv), 0);
+// 	if (!str)
+// 		return (NULL);
+// 	out = hex_format(str, 0);
+// 	free(str);
+// 	if (!out)
+// 		return (NULL);
+// 	return (out);
+// }
+
+char *get_big_string(void) {
+    size_t cap = 256, used = 0;
+    char *s = malloc(cap);
+    int c;
+
+    while ((c = getchar()) != EOF && c != '\n') {
+        if (used + 1 >= cap) {
+            cap *= 2;
+            s = realloc(s, cap);
+        }
+        s[used++] = c;
+    }
+    s[used] = '\0';
+    return s;
+}
+
+t_data	*init_data(t_data *data)
 {
-	data->text = get_hex(argc, argv);
+	ft_dprintf(1, "Put your hex string\n");
+	char *str = get_big_string();
+	printf("\n\n%s\n", str);
+	data->text = hex_format(str, 0);
+	free(str);
 	if (!data->text)
+	{
+		ft_printf("ICI\n");
 		return (NULL);
+	}
 	data->char_by_thread = CHAR_MIN_BY_THREADS;
 	data->nb_threads = 1;
 	data->nb_trigrams = ft_strlen(data->text) - 2;
@@ -106,7 +128,7 @@ int rmv_empty_node(void *content, void *ref, size_t size)
 	return (1);
 }
 
-int main(int argc, char **argv)
+int main()
 {
 	t_data data;
 	t_list *head = NULL;
@@ -114,7 +136,7 @@ int main(int argc, char **argv)
 	if (!config_file(&(data.max_threads), &(data.n_grams)))
 		return (1);
 
-	if (!init_data(argc, argv, &data))
+	if (!init_data(&data))
 		return (1);
 	head = init_head(&data);
 	if (!head)

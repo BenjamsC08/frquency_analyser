@@ -11,18 +11,12 @@ void	*counting_routine(void *ptr_data)
 	t_ulong			i;
 
 	data = (t_reader *)ptr_data;
-	// if (data->id == 0)
-	// 	i = 0;
-	// else
 	i = -1;
 	while (++i < data->length)
 	{
-		// ft_printf("%strigram : %s\n%s", CYAN, &data->sample[i],RESET);
 		if (ft_strlen(&data->sample[i]) <= (t_uint)(data->n_grams - 1))
 			break;
 		explode_sample(data, &data->sample[i], i);
-		// if (!ft_strncmp(&data->sample[i], "f01", 3))
-		// 	print_list(data->h_list);
 	}
 	return (NULL);
 }
@@ -76,7 +70,6 @@ static void explode_sample(t_reader *data, char *sample, t_ulong pos)
 	if (!data || !data->h_list)
 		return;
 
-	// ft_printf("%strigram : %s\n%s", CYAN, sample, RESET);
 	current = *(data->h_list);
 	while (current)
 	{

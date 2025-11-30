@@ -7,7 +7,7 @@ char *remove_whitespace(char *str)
 
 	output = ft_calloc(sizeof(char), ft_strlen(str) + 1);
 	if (!output)
-		return (NULL);
+		return (write(1,"8", 1),NULL);
 	out = output;
 	while (*str)
 	{
@@ -94,8 +94,6 @@ char	*hex_format(char *str, int type)
 	out = reset_hex(str);
 	if (!out)
 		return (NULL);
-	if (ft_strlen(out) % 2 != 0)
-		return (free(out), NULL);
 	ft_lowerise(&out);
 	if (type == ONE_LINE)
 		return (out);
@@ -110,7 +108,7 @@ char	*hex_format(char *str, int type)
 	}
 	out = ft_str_insert(str, to_insert, 2);
 	if (!out)
-		return (free(s), NULL);
+		return (write(1,"3 ", 1), free(s), NULL);
 	if (s != str)
 		return (ft_strfjoin(s, out));
 	return (out);
