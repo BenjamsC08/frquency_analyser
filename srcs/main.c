@@ -90,11 +90,12 @@ char *get_big_string(void) {
 
 t_data	*init_data(t_data *data)
 {
-	ft_dprintf(1, "Put your hex string\n");
+	ft_dprintf(1, "Put your string\n");
 	char *str = get_big_string();
-	printf("\n\n%s\n", str);
-	data->text = hex_format(str, 0);
-	free(str);
+	// printf("\n\n%s\n", str);
+	// data->text = hex_format(str, 0);                    // used for xorcracking to check if all was hexformat and normalize it
+	// free(str);
+	data->text = str;
 	if (!data->text)
 	{
 		ft_printf("ICI\n");
