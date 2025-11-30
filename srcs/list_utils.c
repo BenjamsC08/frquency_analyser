@@ -1,3 +1,5 @@
+#include "ft_def.h"
+#include "libft.h"
 #include "xor_dcode.h"
 
 
@@ -22,7 +24,7 @@ char	**split_for_threads(t_data *data)
 	char	*str;
 	char	**strs;
 
-	str = data->text + 1;
+	str = data->text;
 	l = ft_strlen(str);
 	if (l == 0)
 		return (NULL);
@@ -41,27 +43,25 @@ char	**split_for_threads(t_data *data)
 		data->nb_threads = (l / CHAR_MIN_BY_THREADS);
 		data->char_by_thread = (l / data->nb_threads);
 	}
-	n = 0;
 	strs = ft_calloc(data->nb_threads, sizeof(char *));
 	if (!strs)
 		return (NULL);
+	n = 0;
 	int f = 0;
+
+	#define TRIGRAM_OVERLAP (TRIGRAM_LENGTH - 1)
+
 	while (n < data->nb_threads)
 	{
+		const char	*start_ptr = str +(data->char_by_thread * n) - f;
+		int			len_to_dup;
 		if (n + 1 == data->nb_threads)
-		{
-			strs[n] = ft_strndup(
-				(const char *)((str - f) + (data->char_by_thread * n)),
-				ft_strlen((str + (data->char_by_thread * n))) + f);
-		}
+			len_to_dup = ft_strlen((str + (data->char_by_thread * n))) + f;
 		else
-		{
-			strs[n] = ft_strndup(
-				(const char *)((str - f) + (data->char_by_thread * n)),
-				data->char_by_thread + f);
-		}
+			len_to_dup = data->char_by_thread + f;
+		strs[n] = ft_strndup(start_ptr, len_to_dup);
 		n++;
-		f = TRIGRAM_LENGTH - 1;
+		f = TRIGRAM_OVERLAP;
 	}
 	return (strs);
 }
@@ -73,7 +73,8 @@ void	destroy_list(t_list **head)
 
 	if (!head || !*head)
 		return ;
-	current = *head;
+	current = (*head)->next;
+	ft_lstdelone(*head, &free_data_head);
 	next = NULL;
 	while (current)
 	{

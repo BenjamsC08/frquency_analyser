@@ -1,6 +1,7 @@
 #ifndef XOR_DEF_h
 # define XOR_DEF_h
 
+#include "ft_def.h"
 # include "libft.h"
 # include <pthread.h>
 
@@ -33,6 +34,7 @@ typedef struct s_data
 	int			nb_threads;
 	pthread_t	*threads;
 	t_list		**head;
+	t_list		**list;
 	t_uint		nb_trigrams;	  //count for all trigram
 }				t_data;
 
@@ -44,6 +46,13 @@ typedef struct s_data_node
 	t_bool	sorted;
 	t_mtx	*mtx_node;
 }			t_data_node;
+
+typedef struct s_data_head
+{
+	int		*nb_threads;
+	t_uint	size_sample;
+	int		nb_trigrams;
+}			t_data_head;
 
 typedef struct s_reader
 {

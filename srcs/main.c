@@ -52,10 +52,14 @@ int main(int argc, char **argv)
 
 	if (!init_data(argc, argv, &data))
 		return (1);
-	head = init_head(data.text);
+	head = init_head(&data);
 	if (!head)
 		return (free(data.text), 1);
 	data.head = &head;
+	(*(data.head))->next = start_list(&data);
+	data.list = &((*(data.head))->next);
+	if (!data.list)
+		return free(data.text), destroy_list(&head), 1;
 	if (!create_threads(&data))
 		return free(data.text), destroy_list(&head), 1;
 	lst_merge_sort(*data.head, &compare_node);
@@ -63,7 +67,7 @@ int main(int argc, char **argv)
 	ft_dprintf(1, "%slength of the sample %d, so %d trigrams\n%s", CYAN, l, l-2, RESET );
 	ft_dprintf(1, "%s%d threads used%s\n", CYAN, data.nb_threads, RESET);
 	ft_dprintf(1, "%s%d nodes%s\n", CYAN, ft_lstsize(head), RESET);
-	print_list(data.head);
+	print_list(data.list);
 	destroy_list(data.head);
 	free(data.text);
 	return (0);

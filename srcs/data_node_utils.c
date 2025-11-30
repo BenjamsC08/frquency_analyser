@@ -88,3 +88,14 @@ void	free_data_node(void *ptr_data)
 	}
 	free(data);
 }
+
+void	free_data_head(void *ptr_data)
+{
+	t_data_head	*data;
+
+	data = (t_data_head *)ptr_data;
+	if (!data)
+		return ;
+	free(data);
+}
+
