@@ -1,7 +1,4 @@
 
-optionnal:
-	- t_list to t_dlist
-mandatory :
-	- sort list from biggest count to lowest (merge sort max 4096 nodes)
-	- mesurer les ecart (entre les positions) des trigrammes
-	- calculer le pgcd des ecarts observes (calcul de la longueur de la clee)
+
+actually mersort compare pointer have prblm 
+explode and create as well

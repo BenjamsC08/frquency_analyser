@@ -1,3 +1,4 @@
+#include "libft.h"
 #include "xor_dcode.h"
 
 
@@ -39,7 +40,7 @@ int	compare_node(void *left, void *right)
 	t_data_node *r_node = (t_data_node *)right;
 
 	if (l_node->count - r_node->count != 0)
-		return (l_node->count - r_node->count);
+		return (r_node->count - l_node->count);
 	else
 		return (ft_strcmp(l_node->trigram, r_node->trigram));
 }
@@ -56,13 +57,13 @@ int main(int argc, char **argv)
 		return (free(data.text), 1);
 	data.head = &head;
 	if (!create_threads(&data))
-		return (free(data.text), destroy_list(&head), 1);
-	// print_list(data.head);
+		return free(data.text), destroy_list(&head), 1;
 	lst_merge_sort(*data.head, &compare_node);
-	// ft_printf("\n");
+	int l = ft_strlen(data.text);
+	ft_dprintf(1, "%slength of the sample %d, so %d trigrams\n%s", CYAN, l, l-2, RESET );
+	ft_dprintf(1, "%s%d threads used%s\n", CYAN, data.nb_threads, RESET);
+	ft_dprintf(1, "%s%d nodes%s\n", CYAN, ft_lstsize(head), RESET);
 	print_list(data.head);
-	ft_dprintf(2, "%s%d threads used%s\n", ORANGE, data.nb_threads, RESET);
-	ft_dprintf(2, "%sthe size of the list %d nodes%s\n", YELLOW, ft_lstsize(head), RESET);
 	destroy_list(data.head);
 	free(data.text);
 	return (0);

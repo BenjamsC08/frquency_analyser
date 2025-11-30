@@ -1,5 +1,20 @@
 #include "xor_dcode.h"
 
+
+/* need to be changed lost a lot of trigrams depends on how many threads because
+*
+*
+*
+*	if thread 1 have -	123
+*	if thread 2 have -	456
+*	if thread 3 have -	789	  (like they did actually)
+*
+*	i lost trigrams : {234, 567}
+*
+*	each trigrams n > 0 need to have the two last char of the last thread
+*
+*/
+
 char	**split_for_threads(t_data *data)
 {
 	int		l;
@@ -30,12 +45,23 @@ char	**split_for_threads(t_data *data)
 	strs = ft_calloc(data->nb_threads, sizeof(char *));
 	if (!strs)
 		return (NULL);
+	int f = 0;
 	while (n < data->nb_threads)
 	{
-		strs[n] = ft_strndup(
-			(const char *)(str + (data->char_by_thread * n)),
-			data->char_by_thread);
+		if (n + 1 == data->nb_threads)
+		{
+			strs[n] = ft_strndup(
+				(const char *)((str - f) + (data->char_by_thread * n)),
+				ft_strlen((str + (data->char_by_thread * n))) + f);
+		}
+		else
+		{
+			strs[n] = ft_strndup(
+				(const char *)((str - f) + (data->char_by_thread * n)),
+				data->char_by_thread + f);
+		}
 		n++;
+		f = TRIGRAM_LENGTH - 1;
 	}
 	return (strs);
 }
@@ -63,19 +89,24 @@ void	print_list(t_list **head)
 	t_list	*current;
 	int		count;
 	int		*pos;
-	int		i;
 
 	current = *head;
 	while (current)
 	{
-		i = -1;
 		count = (*(int *)extract_data_node(current->content, COUNT));
 		pos = (int *)extract_data_node(current->content, POS);
-		ft_dprintf(1, "trigram :'%s', count :'%d', ", (char *)extract_data_node(current->content, TRIGRAM),
-			 count);
-		while (++i < count)
-			ft_dprintf(1, "pos[%d]=%d, ", i, pos[i]);
-		ft_dprintf(1,"\n");
+		ft_dprintf(1, "trigram :'%s%s%s', count :'%s%d%s'",
+			 GREEN, (char *)extract_data_node(current->content, TRIGRAM), RESET,
+			 YELLOW, count, RESET);
+		if (DISP == 2)
+		{
+			ft_dprintf(1, ", pos:[" );
+			int i = -1;
+			while (++i < count)
+				ft_dprintf(1, "%d, ", pos[i]);
+			ft_dprintf(1, "]");
+		}
+		ft_dprintf(1, "\n");
 		current = current->next;
 	}
 }

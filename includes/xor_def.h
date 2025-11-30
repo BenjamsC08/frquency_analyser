@@ -18,15 +18,12 @@
 #define COUNT 'C'
 #define SORTED 'S'
 
+#define DISP 2
+#define TRIGRAM_LENGTH 3
+
 #define CHAR_MIN_BY_THREADS 1024
 
 typedef pthread_mutex_t t_mtx;
-
-/*typedef struct s_list*/
-/*{*/
-/*	void				*content;*/
-/*	struct s_list		*next;*/
-/*}						t_list;*/
 
 typedef struct s_data
 {
@@ -55,6 +52,7 @@ typedef struct s_reader
 	char	*sample;
 	t_mtx	*reader_mtx;
 	t_ulong	length;
+	t_uint	start;
 	t_list	**h_list;
 }			t_reader;
 

@@ -1,4 +1,6 @@
+#include "libft.h"
 #include "xor_dcode.h"
+#include <stdio.h>
 
 static void explode_sample(t_reader *data, char *sample, t_ulong pos);
 static t_list *get_unsorted_node(t_reader *data);
@@ -7,16 +9,21 @@ void	*counting_routine(void *ptr_data)
 {
 	t_reader		*data;
 	t_ulong			i;
-	t_ulong			k;
 
 	data = (t_reader *)ptr_data;
-	if (data->id == 0)
-		k = 1;
-	else
-		k = 0;
+	// if (data->id == 0)
+	// 	i = 0;
+	// else
 	i = -1;
-	while (++i < data->length - 2)
-		explode_sample(data, &data->sample[i], i + k);
+	while (++i < data->length)
+	{
+		// ft_printf("%strigram : %s\n%s", CYAN, &data->sample[i],RESET);
+		if (ft_strlen(&data->sample[i]) <= TRIGRAM_LENGTH - 1)
+			break;
+		explode_sample(data, &data->sample[i], i);
+		// if (!ft_strncmp(&data->sample[i], "f01", 3))
+		// 	print_list(data->h_list);
+	}
 	return (NULL);
 }
 
@@ -69,6 +76,7 @@ static void explode_sample(t_reader *data, char *sample, t_ulong pos)
 	if (!data || !data->h_list)
 		return;
 
+	// ft_printf("%strigram : %s\n%s", CYAN, sample, RESET);
 	current = *(data->h_list);
 	while (current)
 	{
@@ -76,15 +84,15 @@ static void explode_sample(t_reader *data, char *sample, t_ulong pos)
 		if (!mutex)
 			return ;
 		pthread_mutex_lock(mutex);
-		if (!ft_strncmp((char *)extract_data_node(current->content, TRIGRAM), sample, 3))
+		if (!ft_strncmp((char *)extract_data_node(current->content, TRIGRAM), sample, TRIGRAM_LENGTH))
 		{
-			update_data_node(current->content, ((int)pos  + (data->id * data->char_by_thread)));
+			update_data_node(data->id, current->content, ((int)pos  + (data->id * data->char_by_thread)));
 			pthread_mutex_unlock(mutex);
 			return;
 		}
 		if (!current->next)
 		{
-			add_data_node(current, sample, (pos + (data->id * data->char_by_thread)));
+			add_data_node(current, sample, ((int)pos + (data->id * data->char_by_thread)));
 			pthread_mutex_unlock(mutex);
 			return;
 		}

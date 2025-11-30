@@ -7,7 +7,7 @@ t_list *init_head(char *tri)
     data = ft_calloc(1, sizeof(t_data_node));
     if (!data)
         return (NULL);
-    data->trigram = ft_strndup(tri, 3);
+    data->trigram = ft_strndup(tri, TRIGRAM_LENGTH);
     if (!data->trigram)
         return (free(data), NULL);
     data->count = 1;
@@ -26,16 +26,27 @@ t_list *init_head(char *tri)
 t_reader *init_data_threads(t_data *data, char *str, int i, t_mtx **mutex)
 {
     t_reader *thread = ft_calloc(1, sizeof(t_reader));
+	static t_ulong k = INT_MAX;
+
     if (!thread)
         return (NULL);
     thread->sample = ft_strdup(str);
     if (!thread->sample)
         return free(thread), free(str), NULL;
     thread->length = ft_strlen(str);
+	if (k > thread->length)
+		k = thread->length;
 	free(str);
 	thread->reader_mtx = *mutex;
     thread->h_list = data->head;
 	thread->id = i;
-	thread->char_by_thread = data->char_by_thread;
+	if (thread->length > k)
+		thread->start = 1 + i * k + (thread->length - k);
+	else if (i == 0)
+		thread->start = 1;
+	else
+		thread->start = 1 + i * thread->length;
+
+	thread->char_by_thread = thread->length;
     return (thread);
 }

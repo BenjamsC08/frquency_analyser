@@ -1,3 +1,4 @@
+#include "libft.h"
 #include "xor_dcode.h"
 
 int	add_data_node(t_list *last, char *str, int pos)
@@ -8,7 +9,7 @@ int	add_data_node(t_list *last, char *str, int pos)
 	data = ft_calloc(1, sizeof(t_data_node));
 	if (!data)
 		return (0);
-	data->trigram = ft_strndup(str, 3);
+	data->trigram = ft_strndup(str, TRIGRAM_LENGTH);
 	if (!data->trigram)
 		return (free_data_node(data), 0);
 	data->count = 1;
@@ -29,7 +30,7 @@ int	add_data_node(t_list *last, char *str, int pos)
 	return (1);
 }
 
-int	update_data_node(t_data_node *data, int pos)
+int	update_data_node(int id, t_data_node *data, int pos)
 {
 	int	*new_pos;
 	int	i;
@@ -41,7 +42,10 @@ int	update_data_node(t_data_node *data, int pos)
 	i = -1;
 	while (++i < (data->count - 1))
 		new_pos[i] = data->pos[i];
-	new_pos[i] = pos;
+	if (id == 0)
+		new_pos[i] = pos;
+	else
+		new_pos[i] = pos;
 	free(data->pos);
 	data->pos = new_pos;
 	return (1);
