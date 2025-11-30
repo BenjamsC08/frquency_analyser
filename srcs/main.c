@@ -1,5 +1,6 @@
 #include "libft.h"
 #include "xor_dcode.h"
+#include "xor_def.h"
 
 
 static char	*get_hex(int argc, char **argv) // temp fuc quotes in the next one
@@ -45,6 +46,17 @@ int	compare_node(void *left, void *right)
 		return (ft_strcmp(l_node->trigram, r_node->trigram));
 }
 
+int rmv_empty_node(void *content, void *ref, size_t size)
+{
+	(void)ref;
+	(void)size;
+	t_data_node *node = (t_data_node *)content;
+
+	if (node->count == 0)
+		return (0);
+	return (1);
+}
+
 int main(int argc, char **argv)
 {
 	t_data data;
@@ -63,6 +75,8 @@ int main(int argc, char **argv)
 	if (!create_threads(&data))
 		return free(data.text), destroy_list(&head), 1;
 	lst_merge_sort(*data.head, &compare_node);
+	ft_lstremove_if(data.list, 0, &rmv_empty_node, &free_data_node);
+
 	int l = ft_strlen(data.text);
 	ft_dprintf(1, "%slength of the sample %d, so %d trigrams\n%s", CYAN, l, l-2, RESET );
 	ft_dprintf(1, "%s%d threads used%s\n", CYAN, data.nb_threads, RESET);
