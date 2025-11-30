@@ -49,7 +49,6 @@ char	**split_for_threads(t_data *data)
 	n = 0;
 	int f = 0;
 
-	#define TRIGRAM_OVERLAP (TRIGRAM_LENGTH - 1)
 
 	while (n < data->nb_threads)
 	{
@@ -61,7 +60,7 @@ char	**split_for_threads(t_data *data)
 			len_to_dup = data->char_by_thread + f;
 		strs[n] = ft_strndup(start_ptr, len_to_dup);
 		n++;
-		f = TRIGRAM_OVERLAP;
+		f = data->n_grams - 1;
 	}
 	return (strs);
 }

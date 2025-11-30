@@ -19,8 +19,7 @@
 #define COUNT 'C'
 #define SORTED 'S'
 
-#define DISP 2
-#define TRIGRAM_LENGTH 3
+#define DISP 1
 
 #define CHAR_MIN_BY_THREADS 1024
 
@@ -35,6 +34,7 @@ typedef struct s_data
 	pthread_t	*threads;
 	t_list		**head;
 	t_list		**list;
+	t_uint		n_grams;
 	t_uint		nb_trigrams;	  //count for all trigram
 }				t_data;
 
@@ -57,6 +57,7 @@ typedef struct s_data_head
 typedef struct s_reader
 {
 	int		id;
+	int		n_grams;
 	int		char_by_thread;
 	char	*sample;
 	t_mtx	*reader_mtx;

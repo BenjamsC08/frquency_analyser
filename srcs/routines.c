@@ -18,7 +18,7 @@ void	*counting_routine(void *ptr_data)
 	while (++i < data->length)
 	{
 		// ft_printf("%strigram : %s\n%s", CYAN, &data->sample[i],RESET);
-		if (ft_strlen(&data->sample[i]) <= TRIGRAM_LENGTH - 1)
+		if (ft_strlen(&data->sample[i]) <= (t_uint)(data->n_grams - 1))
 			break;
 		explode_sample(data, &data->sample[i], i);
 		// if (!ft_strncmp(&data->sample[i], "f01", 3))
@@ -84,7 +84,7 @@ static void explode_sample(t_reader *data, char *sample, t_ulong pos)
 		if (!mutex)
 			return ;
 		pthread_mutex_lock(mutex);
-		if (!ft_strncmp((char *)extract_data_node(current->content, TRIGRAM), sample, TRIGRAM_LENGTH))
+		if (!ft_strncmp((char *)extract_data_node(current->content, TRIGRAM), sample, data->n_grams))
 		{
 			update_data_node(data->id, current->content, ((int)pos  + (data->id * data->char_by_thread)));
 			pthread_mutex_unlock(mutex);
@@ -92,7 +92,7 @@ static void explode_sample(t_reader *data, char *sample, t_ulong pos)
 		}
 		if (!current->next)
 		{
-			add_data_node(current, sample, ((int)pos + (data->id * data->char_by_thread)));
+			add_data_node(current, sample, ((int)pos + (data->id * data->char_by_thread)), data->n_grams);
 			pthread_mutex_unlock(mutex);
 			return;
 		}
