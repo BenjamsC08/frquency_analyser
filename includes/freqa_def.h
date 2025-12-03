@@ -19,7 +19,7 @@
 #define COUNT 'C'
 #define SORTED 'S'
 
-#define DISP 1
+#define DISP 2
 
 #define CHAR_MIN_BY_THREADS 1024
 

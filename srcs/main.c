@@ -138,8 +138,10 @@ int main()
 	ft_lstremove_if(data.list, 0, &rmv_empty_node, &free_data_node);
 	*data.list = lst_merge_sort(*data.list, &compare_node);
 
-	// if (!data.child)
-	print_list(data.head);
+	if (!data.child)
+		print_list(data.head);
+	else
+		export_list(data.head);
 	destroy_list(data.head);
 	free(data.text);
 	return (0);

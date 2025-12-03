@@ -1,7 +1,7 @@
 CC = cc
 FLAGS = -g -Wall -Wextra -Werror
 NAME = freq
-SRCS = srcs/hex_parsing.c srcs/list_utils.c srcs/multiThread.c srcs/main.c srcs/data_node_utils.c srcs/inits.c srcs/routines.c
+SRCS = srcs/inits.c srcs/main.c srcs/hex_parsing.c srcs/multiThread.c srcs/list_utils.c srcs/routines.c srcs/data_node_utils.c srcs/export.c
 OBJ = $(SRCS:.c=.o)
 LIB_PATH = -Llibft
 LIB_NAME = -lft

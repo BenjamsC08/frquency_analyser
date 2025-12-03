@@ -28,5 +28,7 @@ void		free_data_head(void *ptr_data);
 char		**split_for_threads(t_data *data);
 void		print_list(t_list **head);
 void		destroy_list(t_list **head);
+//
+int export_list(t_list **head);
 
 #endif
