@@ -90,30 +90,34 @@ void	print_list(t_list **head)
 {
 	t_list	*current;
 	int		count;
-	int		*pos;
+	// int		*pos;
 
 	int max = ((t_data_head *)((*head)->content))->nb_trigrams;
 	ft_dprintf(1, "%slength of the sample %d\n%s", CYAN, ((t_data_head *)((*head)->content))->size_sample, RESET);
 	ft_dprintf(1, "%s%d trigrams\n%s", CYAN, max, RESET);
-	ft_dprintf(1, "%s%d nodes%s\n", CYAN, *((t_data_head *)((*head)->content))->nb_threads, RESET);
+	ft_dprintf(1, "%s%d threads%s\n", CYAN, *((t_data_head *)((*head)->content))->nb_threads, RESET);
+	ft_dprintf(1, "%s%d nodes%s\n", CYAN, ft_lstsize(*head), RESET);
 	current = (*head)->next;
 	while (current)
 	{
 		count = (*(int *)extract_data_node(current->content, COUNT));
-		pos = (int *)extract_data_node(current->content, POS);
+		// pos = (int *)extract_data_node(current->content, POS);
 		ft_dprintf(1, "trigram :'%s%s%s', count :'%s%d%s'", 
 			 GREEN, (char *)extract_data_node(current->content, TRIGRAM), RESET,
 			 YELLOW, count, RESET);
 		dprintf(1, " prob : %s%.2f%%%s", YELLOW, 100.0f * count / max, RESET);
-		if (DISP == 2)
-		{
-			ft_dprintf(1, ", pos:[" );
-			int i = -1;
-			while (++i < count)
-				ft_dprintf(1, "%d, ", pos[i]);
-			ft_dprintf(1, "]");
-		}
+		// if (DISP == 2)
+		// {
+		// 	ft_dprintf(1, ", pos:[" );
+		// 	int i = -1;
+		// 	while (++i < count)
+		// 		ft_dprintf(1, "%d, ", pos[i]);
+		// 	ft_dprintf(1, "]");
+		// }
 		ft_dprintf(1, "\n");
-		current = current->next;
+		if (current->next)
+			current = current->next;
+		else 
+			break;
 	}
 }
