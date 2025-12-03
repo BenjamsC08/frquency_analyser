@@ -7,7 +7,7 @@ char *remove_whitespace(char *str)
 
 	output = ft_calloc(sizeof(char), ft_strlen(str) + 1);
 	if (!output)
-		return (write(1,"8", 1),NULL);
+		return (NULL);
 	out = output;
 	while (*str)
 	{
@@ -28,9 +28,9 @@ char	*reset_hex(char *str)
 	
 	iu = remove_whitespace(str);
 	if (!iu)
-		return (NULL);
-	if (!ft_only_charset(iu, "0123456789abcdefABCDEFxX:;,"))
-		return (free(iu), NULL);
+		return (write(1, "2\n", 2), NULL);
+	if (!ft_only_charset(iu, "0123456789abcdefABCDEFxX:;,\\"))
+		return (write(1, "3\n", 2), free(iu), NULL);
 	out = NULL;
 	if (iu[0] == 'x')
 		out = ft_remove_charset(iu, "x");
@@ -38,6 +38,8 @@ char	*reset_hex(char *str)
 		out = ft_remove_charset(iu, "X");
 	if (iu[0] == '0' && iu[1] == 'x')
 		out = ft_remove_substring(iu, "0x");
+	if (iu[0] == '\\' && iu[1] == 'x')
+		out = ft_remove_substring(iu, "\\x");
 	if (iu[0] == '0' && iu[1] == 'X')
 		out = ft_remove_substring(iu, "0X");
 	if (iu[2] == ':' || iu[2] == ';' || iu[2] == ',')
@@ -92,9 +94,8 @@ char	*hex_format(char *str, int type)
 	char	*to_insert;
 
 	out = reset_hex(str);
-	ft_printf(out);
 	if (!out)
-		return (NULL);
+		return (write(1,"1\n", 2), NULL);
 	ft_lowerise(&out);
 	if (type == ONE_LINE)
 		return (out);
