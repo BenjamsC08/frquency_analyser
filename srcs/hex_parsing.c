@@ -1,4 +1,4 @@
-#include "xor_dcode.h"
+#include "freq_a.h"
 
 char *remove_whitespace(char *str)
 {
@@ -92,6 +92,7 @@ char	*hex_format(char *str, int type)
 	char	*to_insert;
 
 	out = reset_hex(str);
+	ft_printf(out);
 	if (!out)
 		return (NULL);
 	ft_lowerise(&out);
@@ -108,7 +109,7 @@ char	*hex_format(char *str, int type)
 	}
 	out = ft_str_insert(str, to_insert, 2);
 	if (!out)
-		return (write(1,"3 ", 1), free(s), NULL);
+		return (free(s), NULL);
 	if (s != str)
 		return (ft_strfjoin(s, out));
 	return (out);

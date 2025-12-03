@@ -1,7 +1,7 @@
 #ifndef XOR_DECODE_H
 # define XOR_DECODE_H
 
-#include "xor_def.h"
+#include "freqa_def.h"
 
 //	hex_parsing.c
 char		*remove_whitespace(char *str);

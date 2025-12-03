@@ -1,4 +1,4 @@
-#include "xor_dcode.h"
+#include "freq_a.h"
 
 void	launch_threads(t_data *data, t_reader **data_p, void *(*routines)(void *))
 {

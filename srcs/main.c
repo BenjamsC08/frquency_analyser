@@ -1,21 +1,25 @@
 #include "libft.h"
-#include "xor_dcode.h"
-#include "xor_def.h"
+#include "freq_a.h"
 #include <stdio.h>
 
-int config_file(int *max_threads, t_uint *size_ngrams)
+int config_file(int *max_threads, t_uint *size_ngrams, t_bool *child)
 {
     FILE *f = fopen("config", "r");
-    int threads = 0, ngrams = 0;
+    int threads = 0, ngrams = 0, c = 0;
 
     if (f)
 	{
-        if (fscanf(f, "%d %d", &threads, &ngrams) == 2)
+        if (fscanf(f, "%d %d %d", &threads, &ngrams, &c) == 3)
 		{
             fclose(f);
             if (threads >= 1 && threads <= 64 && ngrams >= 2) {
                 *max_threads = threads;
                 *size_ngrams = ngrams;
+				if (c == 0)
+					*child = FALSE;
+				else
+					*child = TRUE;
+
                 return (1);
             }
         }
@@ -44,7 +48,7 @@ int config_file(int *max_threads, t_uint *size_ngrams)
     f = fopen("config", "w");
     if (f)
 	{
-        fprintf(f, "%d\n%d\n", threads, ngrams);
+        fprintf(f, "%d\n%d\n0\n", threads, ngrams);
         fclose(f);
     }
 
@@ -52,25 +56,6 @@ int config_file(int *max_threads, t_uint *size_ngrams)
     *size_ngrams = ngrams;
     return (1);
 }
-
-// static char	*get_hex(int argc, char **argv) // temp fuc quotes in the next one
-// {
-// 	char	*str;
-// 	char	*out;
-//
-// 	str = NULL;
-// 	if (argc == 1)
-// 		return (NULL);
-// 	if (argc >= 2)
-// 		str = ft_unsplit((++argv), 0);
-// 	if (!str)
-// 		return (NULL);
-// 	out = hex_format(str, 0);
-// 	free(str);
-// 	if (!out)
-// 		return (NULL);
-// 	return (out);
-// }
 
 char *get_big_string(void) {
     size_t cap = 256, used = 0;
@@ -92,13 +77,15 @@ t_data	*init_data(t_data *data)
 {
 	ft_dprintf(1, "Put your string\n");
 	char *str = get_big_string();
-	// printf("\n\n%s\n", str);
-	// data->text = hex_format(str, 0);                    // used for xorcracking to check if all was hexformat and normalize it
-	// free(str);
-	data->text = str;
+	if (data->child)
+	{
+		data->text = hex_format(str, 0); //used for xorcracking to check if all was hexformat and normalize it
+		free(str);
+	}
+	else
+		data->text = str;
 	if (!data->text)
 	{
-		ft_printf("ICI\n");
 		return (NULL);
 	}
 	data->char_by_thread = CHAR_MIN_BY_THREADS;
@@ -112,10 +99,9 @@ int	compare_node(void *left, void *right)
 	t_data_node *l_node = (t_data_node *)left;
 	t_data_node *r_node = (t_data_node *)right;
 
-	if (l_node->count - r_node->count != 0)
-		return (r_node->count - l_node->count);
-	else
-		return (ft_strcmp(l_node->trigram, r_node->trigram));
+	if (l_node->count != r_node->count)
+		return (l_node->count - r_node->count);
+	return (ft_strcmp(l_node->trigram, r_node->trigram));
 }
 
 int rmv_empty_node(void *content, void *ref, size_t size)
@@ -134,7 +120,7 @@ int main()
 	t_data data;
 	t_list *head = NULL;
 
-	if (!config_file(&(data.max_threads), &(data.n_grams)))
+	if (!config_file(&(data.max_threads), &(data.n_grams), &data.child))
 		return (1);
 
 	if (!init_data(&data))
@@ -152,11 +138,8 @@ int main()
 	lst_merge_sort(*data.head, &compare_node);
 	ft_lstremove_if(data.list, 0, &rmv_empty_node, &free_data_node);
 
-	int l = ft_strlen(data.text);
-	ft_dprintf(1, "%slength of the sample %d, so %d trigrams\n%s", CYAN, l, l-2, RESET );
-	ft_dprintf(1, "%s%d threads used%s\n", CYAN, data.nb_threads, RESET);
-	ft_dprintf(1, "%s%d nodes%s\n", CYAN, ft_lstsize(head), RESET);
-	print_list(data.list);
+	if (!data.child)
+		print_list(data.head);
 	destroy_list(data.head);
 	free(data.text);
 	return (0);

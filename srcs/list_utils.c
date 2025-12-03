@@ -1,6 +1,6 @@
 #include "ft_def.h"
 #include "libft.h"
-#include "xor_dcode.h"
+#include "freq_a.h"
 
 
 /* need to be changed lost a lot of trigrams depends on how many threads because
@@ -84,20 +84,27 @@ void	destroy_list(t_list **head)
 	*head = NULL;
 }
 
+#include <stdio.h>
+
 void	print_list(t_list **head)
 {
 	t_list	*current;
 	int		count;
 	int		*pos;
 
-	current = *head;
+	int max = ((t_data_head *)((*head)->content))->nb_trigrams;
+	ft_dprintf(1, "%slength of the sample %d\n%s", CYAN, ((t_data_head *)((*head)->content))->size_sample, RESET);
+	ft_dprintf(1, "%s%d trigrams\n%s", CYAN, max, RESET);
+	ft_dprintf(1, "%s%d nodes%s\n", CYAN, *((t_data_head *)((*head)->content))->nb_threads, RESET);
+	current = (*head)->next;
 	while (current)
 	{
 		count = (*(int *)extract_data_node(current->content, COUNT));
 		pos = (int *)extract_data_node(current->content, POS);
-		ft_dprintf(1, "trigram :'%s%s%s', count :'%s%d%s'",
+		ft_dprintf(1, "trigram :'%s%s%s', count :'%s%d%s'", 
 			 GREEN, (char *)extract_data_node(current->content, TRIGRAM), RESET,
 			 YELLOW, count, RESET);
+		dprintf(1, " prob : %s%.2f%%%s", YELLOW, 100.0f * count / max, RESET);
 		if (DISP == 2)
 		{
 			ft_dprintf(1, ", pos:[" );

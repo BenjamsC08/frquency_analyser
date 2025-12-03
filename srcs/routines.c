@@ -1,5 +1,5 @@
 #include "libft.h"
-#include "xor_dcode.h"
+#include "freq_a.h"
 #include <stdio.h>
 
 static void explode_sample(t_reader *data, char *sample, t_ulong pos);

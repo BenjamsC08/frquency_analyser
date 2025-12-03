@@ -1,4 +1,4 @@
-#include "xor_dcode.h"
+#include "freq_a.h"
 
 t_list *init_head(t_data *d)
 {

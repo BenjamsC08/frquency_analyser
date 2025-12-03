@@ -1,5 +1,5 @@
 #include "libft.h"
-#include "xor_dcode.h"
+#include "freq_a.h"
 
 int	add_data_node(t_list *last, char *str, int pos, int size_grams)
 {
