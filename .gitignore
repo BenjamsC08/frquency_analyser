@@ -10,3 +10,4 @@ compile_commands.json
 prog
 config
 freq
+result/*

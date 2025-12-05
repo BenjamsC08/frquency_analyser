@@ -94,7 +94,7 @@ t_data	*init_data(t_data *data)
 	return (data);
 }
 
-int	compare_node(void *left, void *right)
+int	compare_node_crescent(void *left, void *right)
 {
 	t_data_node *l_node = (t_data_node *)left;
 	t_data_node *r_node = (t_data_node *)right;
@@ -103,6 +103,17 @@ int	compare_node(void *left, void *right)
 		return (l_node->count - r_node->count);
 	return (ft_strcmp(r_node->trigram, l_node->trigram));
 }
+
+int	compare_node_decrescent(void *left, void *right)
+{
+	t_data_node *l_node = (t_data_node *)left;
+	t_data_node *r_node = (t_data_node *)right;
+
+	if (l_node->count != r_node->count)
+		return (r_node->count - l_node->count);
+	return (ft_strcmp(r_node->trigram, l_node->trigram));
+}
+
 
 int rmv_empty_node(void *content, void *ref, size_t size)
 {
@@ -136,7 +147,10 @@ int main()
 	if (!create_threads(&data))
 		return free(data.text), destroy_list(&head), 1;
 	ft_lstremove_if(data.list, 0, &rmv_empty_node, &free_data_node);
-	*data.list = lst_merge_sort(*data.list, &compare_node);
+	if (!data.child)
+		*data.list = lst_merge_sort(*data.list, &compare_node_crescent);
+	else
+		*data.list = lst_merge_sort(*data.list, &compare_node_decrescent);
 
 	if (!data.child)
 		print_list(data.head);

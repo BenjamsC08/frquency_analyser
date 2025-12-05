@@ -2,17 +2,19 @@
 #include "freqa_def.h"
 #include <time.h>
 #include <stdio.h>
+#include <sys/stat.h>
 
 
 int export_list(t_list **head)
 {
 	t_list *current;
 
-	char *str = malloc(256);
-	snprintf ( str, 256, "out_%lu.txt", (unsigned long)time(NULL));
-	ft_printf("%s\n", str);
+	char str[256];
+	mkdir("result", 0777);
+	snprintf ( str, 256, "result/out_%lu.txt", (unsigned long)time(NULL));
 	int fd = open(str, O_WRONLY | O_CREAT);
-	ft_printf("%d\n", fd);
+	if (fd == -1)
+		return (0);
 
 	current = (*head)->next;
 	int count = 0;
@@ -44,6 +46,6 @@ int export_list(t_list **head)
 		current = current->next;
 	}
 	close(fd);
-	free(str);
+	ft_printf("check : %s\n", str);
 	return (1);
 }
