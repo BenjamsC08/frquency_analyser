@@ -1,8 +1,4 @@
 #include "freq_a.h"
-#include "freqa_def.h"
-#include <time.h>
-#include <stdio.h>
-#include <sys/stat.h>
 
 
 int export_list(t_list **head)

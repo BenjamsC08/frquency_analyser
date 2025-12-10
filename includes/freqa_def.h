@@ -2,8 +2,12 @@
 # define XOR_DEF_h
 
 # include "libft.h"
-# include <pthread.h>
+
+#include <pthread.h>
 #include <stdio.h>
+#include <time.h>
+#include <stdio.h>
+#include <sys/stat.h>
 
 # define ONE_LINE 0
 # define ZEROX 1
