@@ -1,7 +1,6 @@
 #ifndef XOR_DEF_h
 # define XOR_DEF_h
 
-#include "ft_def.h"
 # include "libft.h"
 # include <pthread.h>
 
@@ -19,7 +18,7 @@
 #define COUNT 'C'
 #define SORTED 'S'
 
-#define DISP 2
+#define DISP 1
 
 #define CHAR_MIN_BY_THREADS 1024
 

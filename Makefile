@@ -3,7 +3,7 @@ FLAGS = -g -Wall -Wextra -Werror
 NAME = freq
 SRCS = srcs/inits.c srcs/main.c srcs/hex_parsing.c srcs/multiThread.c srcs/list_utils.c srcs/routines.c srcs/data_node_utils.c srcs/export.c
 OBJ = $(SRCS:.c=.o)
-LIB_PATH = -Llibft
+LIB_PATH = -L.
 LIB_NAME = -lft
 INCLUDE_PATH = -Ilibft/includes -Iincludes
 VALID = \033[1;32m
@@ -11,13 +11,8 @@ NOTVALID = \033[1;31m
 LOADING = \033[3;33m
 RESET = \033[0m
 
-all: libft/libft.a $(NAME)
+all: $(NAME)
 	@printf "$(VALID) - Done \t\t\t✅$(RESET)\n"
-
-libft/libft.a:
-	@printf "\r$(LOADING) - libft: compilation ... \t🔃 $(RESET)"
-	@$(MAKE) -C libft > /dev/null 2>&1
-	@printf "\n$(VALID) - libft: comilation terminée \t✅$(RESET)\n"
 
 srcs/%.o: srcs/%.c
 	$(CC) $(FLAGS) $(INCLUDE_PATH) -c $< -o $@
@@ -28,12 +23,10 @@ $(NAME): $(OBJ)
 
 clean:
 	@rm -f $(OBJ)
-	@$(MAKE) -C libft clean > /dev/null 2>&1
 	@printf "$(VALID) - clean \t\t\t✅$(RESET)\n"
 
 fclean: clean
 	@rm -f $(NAME) *.json
-	@$(MAKE) -C libft fclean > /dev/null 2>&1
 	@printf "$(VALID) - fclean \t\t\t✅$(RESET)\n"
 
 re: fclean all

@@ -1,5 +1,3 @@
-#include "ft_def.h"
-#include "libft.h"
 #include "freq_a.h"
 
 

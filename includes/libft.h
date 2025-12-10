@@ -13,23 +13,245 @@
 #ifndef LIBFT_H
 # define LIBFT_H
 
-# include "ft_boolean.h"
-# include "ft_def.h"
-# include "ft_limits.h"
-# include "get_next_line.h"
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdarg.h>
+# include <fcntl.h>
+
+
+
+/**********************************************************************************************************************/
+/**********************************************************************************************************************/
+/*********************************************** Define ***************************************************************/
+/**********************************************************************************************************************/
+/**********************************************************************************************************************/
+
+/*
+ * BOOL
+ */
+
+#ifndef TRUE
+	#define TRUE 1
+#endif
+
+#ifndef FALSE
+	#define FALSE 0
+#endif
+
+#ifndef SUCCESS
+	#define SUCCESS 0
+#endif
+
+#ifndef FAILED
+	#define FAILED 1
+#endif
+
+/*
+ * STD
+ */
+
+#ifndef STDIN
+	#define STDIN 0
+#endif
+
+#ifndef STDOUT
+	#define STDOUT 1
+#endif
+
+#ifndef STDERR
+	#define STDERR 2
+#endif
+/*
+ *	LIMITS
+ */
+
+#ifndef UINT_MAX
+	#define UINT_MAX 4294967295
+#endif
+
+#ifndef INT_MAX
+	#define INT_MAX 2147483647
+#endif
+
+#ifndef INT_MIN
+	#define INT_MIN -2147483648
+#endif
+
+#ifndef ULONG_MAX
+	#define ULONG_MAX 18446744073709551615
+#endif
+
+#ifndef LONG_MAX
+	#define LONG_MAX 9223372036854775807
+#endif
+
+#ifndef LONG_MIN
+	#define LONG_MIN -9223372036854775808
+#endif
+
+#ifndef PATH_MAX
+	#define PATH_MAX 8192
+#endif
+
+#ifndef ARG_MAX
+	#define ARG_MAX 4194304
+#endif
+
+#ifndef SIZE_MAX
+	#define SIZE_MAX 4294967295
+#endif
+
+
+/*
+ *	Colors
+*/ 
+
+#ifndef RESET
+	#define RESET "\033[0m"
+#endif
+
+#ifndef RED
+	#define RED "\033[0;31m"
+#endif
+
+#ifndef GREEN
+	#define GREEN "\033[0;32m"
+#endif
+
+#ifndef YELLOW
+	#define YELLOW "\033[0;33m"
+#endif
+
+#ifndef BLUE
+	#define BLUE "\033[0;34m"
+#endif
+
+#ifndef MAGENTA
+	#define MAGENTA "\033[0;35m"
+#endif
+
+#ifndef CYAN
+	#define CYAN "\033[0;36m"
+#endif
+
+#ifndef WHITE
+	#define WHITE "\033[0;37m"
+#endif
+
+#ifndef WHITE
+	#define WHITE "\033[0;91m"
+#endif
+
+#ifndef PURPLE
+	#define PURPLE "\033[0;95m"
+#endif
+
+#ifndef DARK_ORANGE
+	#define DARK_ORANGE "\033[0;33m"
+#endif
+
+#ifndef PINK
+	#define PINK "\033[0;95m"
+#endif
+
+#ifndef TEAL
+	#define TEAL "\033[0;96m"
+#endif
+
+#ifndef GRAY
+	#define GRAY "\033[0;90m"
+#endif
+
+/*
+ *	MISC
+ */
+
+#ifndef START
+	#define START 'S'
+#endif
+
+#ifndef END
+	#define END 'E'
+#endif
+
+#ifndef SIMPLE
+	#define SIMPLE 's'
+#endif
+
+#ifndef DOUBLE
+	#define DOUBLE 'd'
+#endif
+
+#ifndef MAJ_HEX
+	#define MAJ_HEX 'X'
+#endif
+
+#ifndef MIN_HEX
+	#define MIN_HEX 'x'
+#endif
+
+#ifndef PI
+	#define PI 3.14159265359
+#endif
+
+/*
+ *	Struct
+ */
+
+typedef struct s_list
+{
+	void				*content;
+	struct s_list		*next;
+}						t_list;
+
+typedef struct s_dlist
+{
+	void			*content;
+	struct s_dlist	*next;
+	struct s_dlist	*prev;
+}					t_dlist;
+
+/*
+ *	types
+ */
+
+typedef int				t_bool;
+typedef unsigned char	t_byte;
+typedef unsigned long	t_ulong;
+typedef unsigned long	t_uintptr;
+typedef unsigned int	t_uint;
+typedef t_dlist			t_gc;
+
+
+
+/**********************************************************************************************************************/
+/**********************************************************************************************************************/
+/****************************************** Func Declaration **********************************************************/
+/**********************************************************************************************************************/
+/**********************************************************************************************************************/
+
 
 /*
  *			bit manips
  */
-unsigned char	ft_reverse_bits(unsigned char octet);
-unsigned int	ft_reverse_octets(unsigned int octets);
 unsigned char	ft_swap_bits(unsigned char octet);
-unsigned int	ft_swap_octets(unsigned int octets);
-void			ft_print_bits(unsigned char octet);
-void			ft_print_octets(unsigned int octets);
+t_uint			ft_reverse_bits(t_uint octets);
+void			ft_print_bits(t_uint octets);
+
+// operand
+int	nand(int a, int b);
+
+// setters
+void	turn_off_bit(int *ptr, int pos);
+void	turn_off_bits(int *ptr, int start_pos, int length);
+void	turn_on_bit(int *ptr, int pos);
+void	turn_on_bits(int *ptr, int start_pos, int length);
+
+// getters
+int	get_bit(int value, int pos);
+int	get_bit_value(int value, int pos);
+int	get_bits(int value, int pos, int length);
+
 /*
  *			char verification
  */
@@ -207,4 +429,24 @@ char			**ft_add_strs_gc(t_gc **head, char **strs);
 
 int				**ft_1d_to_2d_int(t_gc **gc, const int *tab,
 					int rows, int cols);
+
+
+/*
+*		  GNL
+*/
+
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
+# endif
+
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 4
+# endif
+
+char	*ft_strjoin_gnl(char *s1, char *s2);
+int		found_newline(char *str);
+char	*get_next_line(int fd);
+void	close_gnl(int fd);
+
+
 #endif

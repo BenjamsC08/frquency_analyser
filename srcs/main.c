@@ -15,6 +15,7 @@ int config_file(int *max_threads, t_uint *size_ngrams, t_bool *child)
             if (threads >= 1 && threads <= 64 && ngrams >= 2) {
                 *max_threads = threads;
                 *size_ngrams = ngrams;
+				ft_dprintf(2, RED "NON\n" RESET);
 				if (c == 0)
 					*child = FALSE;
 				else
