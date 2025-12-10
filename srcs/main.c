@@ -1,62 +1,6 @@
-#include "libft.h"
 #include "freq_a.h"
-#include <stdio.h>
 
-int config_file(int *max_threads, t_uint *size_ngrams, t_bool *child)
-{
-    FILE *f = fopen("config", "r");
-    int threads = 0, ngrams = 0, c = 0;
 
-    if (f)
-	{
-        if (fscanf(f, "%d %d %d", &threads, &ngrams, &c) == 3)
-		{
-            fclose(f);
-            if (threads >= 1 && threads <= 64 && ngrams >= 2) {
-                *max_threads = threads;
-                *size_ngrams = ngrams;
-				ft_dprintf(2, RED "NON\n" RESET);
-				if (c == 0)
-					*child = FALSE;
-				else
-					*child = TRUE;
-
-                return (1);
-            }
-        }
-        fclose(f);
-    }
-    ft_dprintf(1, "No valid configuration found. Entering interactive setup.\n");
-
-    while (1)
-	{
-        ft_dprintf(1, "Max thread (1-64) [<= nproc]:\n");
-        if (scanf("%d", &threads) == 1 && threads >= 1 && threads <= 64)
-            break;
-        ft_dprintf(1, "Invalid thread count.\n");
-        while (getchar() != '\n');
-    }
-
-    while (1) {
-        ft_dprintf(1, "Size of ngrams (min 2, max INT_MAX):\n");
-        if (scanf("%d", &ngrams) == 1 && ngrams >= 2)
-            break;
-        ft_dprintf(1, "Invalid size.\n");
-        while (getchar() != '\n');
-    }
-    while (getchar() != '\n');
-
-    f = fopen("config", "w");
-    if (f)
-	{
-        fprintf(f, "%d\n%d\n0\n", threads, ngrams);
-        fclose(f);
-    }
-
-    *max_threads = threads;
-    *size_ngrams = ngrams;
-    return (1);
-}
 
 char *get_big_string(void) {
     size_t cap = 256, used = 0;
@@ -132,7 +76,7 @@ int main()
 	t_data data;
 	t_list *head = NULL;
 
-	if (!config_file(&(data.max_threads), &(data.n_grams), &data.child))
+	if (!config_file(&data))
 		return (1);
 
 	if (!init_data(&data))
