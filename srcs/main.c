@@ -22,7 +22,7 @@ t_data	*init_data(t_data *data)
 {
 	ft_dprintf(1, "Put your string\n");
 	char *str = get_big_string();
-	if (data->child)
+	if (data->hex)
 	{
 		data->text = hex_format(str, 0); //used for xorcracking to check if all was hexformat and normalize it
 		free(str);
@@ -92,12 +92,12 @@ int main()
 	if (!create_threads(&data))
 		return free(data.text), destroy_list(&head), 1;
 	ft_lstremove_if(data.list, 0, &rmv_empty_node, &free_data_node);
-	if (!data.child)
+	if (!data.config)
 		*data.list = lst_merge_sort(*data.list, &compare_node_crescent);
 	else
 		*data.list = lst_merge_sort(*data.list, &compare_node_decrescent);
 
-	if (!data.child)
+	if (!data.config)
 		print_list(data.head);
 	else
 		export_list(data.head);

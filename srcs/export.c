@@ -12,7 +12,7 @@ int export_list(t_list **head)
 	char str[256];
 	mkdir("result", 0777);
 	snprintf ( str, 256, "result/out_%lu.txt", (unsigned long)time(NULL));
-	int fd = open(str, O_WRONLY | O_CREAT | O_RDONLY);
+	int fd = open(str, O_WRONLY | O_CREAT, 0444);
 	if (fd == -1)
 		return (0);
 

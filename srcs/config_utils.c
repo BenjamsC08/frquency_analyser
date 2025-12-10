@@ -17,7 +17,7 @@ int read_config(FILE *f, t_data *data, t_uint v)
 		value = v;
 	else
 		return (0);
-	data->child = get_bit(value, 0);
+	data->config = get_bit(value, 0);
 	data->hex = get_bit(value, 1);
 	data->n_grams = get_bits(value, 2, 6);
 	data->max_threads = get_bits(value, 8, 5);

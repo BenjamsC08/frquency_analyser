@@ -29,8 +29,10 @@ fclean: clean
 	@rm -f $(NAME) *.json
 	@printf "$(VALID) - fclean \t\t\t✅$(RESET)\n"
 
-reset: fclean
+reset:
 	@rm -rf config
+
+freset: fclean reset
 
 re: fclean all
 

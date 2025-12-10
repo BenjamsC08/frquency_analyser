@@ -36,7 +36,7 @@ typedef struct s_data
 	t_list		**list;
 	t_uint		n_grams;
 	t_uint		nb_trigrams;	  //count for all trigram
-	t_bool		child;			  // 0 if only frequency, 1 if another prog call it
+	t_bool		config;			  // 0 if only frequency, 1 if another prog call it
 	t_bool		hex;
 }				t_data;
 
