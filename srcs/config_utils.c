@@ -21,10 +21,9 @@ int read_config(FILE *f, t_data *data, t_uint v)
 	data->hex = get_bit(value, 1);
 	data->n_grams = get_bits(value, 2, 6);
 	data->max_threads = get_bits(value, 8, 5);
+
 	return (1);
-
 }
-
 
 int config_file(t_data *data)
 {

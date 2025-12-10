@@ -1,7 +1,5 @@
 #include "freq_a.h"
 
-
-
 char *get_big_string(void) {
     size_t cap = 256, used = 0;
     char *s = malloc(cap);
@@ -24,7 +22,7 @@ t_data	*init_data(t_data *data)
 	char *str = get_big_string();
 	if (data->hex)
 	{
-		data->text = hex_format(str, 0); //used for xorcracking to check if all was hexformat and normalize it
+		data->text = hex_format(str, 0);
 		free(str);
 	}
 	else
