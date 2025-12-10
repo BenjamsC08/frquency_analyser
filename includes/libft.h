@@ -239,18 +239,18 @@ t_uint			ft_reverse_bits(t_uint octets);
 void			ft_print_bits(t_uint octets);
 
 // operand
-int	nand(int a, int b);
+int				nand(int a, int b);
 
 // setters
-void	turn_off_bit(int *ptr, int pos);
-void	turn_off_bits(int *ptr, int start_pos, int length);
-void	turn_on_bit(int *ptr, int pos);
-void	turn_on_bits(int *ptr, int start_pos, int length);
+void			turn_off_bit(int *ptr, int pos);
+void			turn_off_bits(int *ptr, int start_pos, int length);
+void			turn_on_bit(int *ptr, int pos);
+void			turn_on_bits(int *ptr, int start_pos, int length);
 
 // getters
-int	get_bit(int value, int pos);
-int	get_bit_value(int value, int pos);
-int	get_bits(int value, int pos, int length);
+int				get_bit(int value, int pos);
+int				get_bit_value(int value, int pos);
+int				get_bits(int value, int pos, int length);
 
 /*
  *			char verification
