@@ -84,17 +84,13 @@ void	destroy_list(t_list **head)
 
 #include <stdio.h>
 
-void	print_list(t_list **head)
+void	print_list(t_list **head, t_uint p)
 {
 	t_list	*current;
 	int		count;
 	int		*pos;
 
 	int max = ((t_data_head *)((*head)->content))->nb_trigrams;
-	ft_dprintf(1, "%slength of the sample %d\n%s", CYAN, ((t_data_head *)((*head)->content))->size_sample, RESET);
-	ft_dprintf(1, "%s%d trigrams\n%s", CYAN, max, RESET);
-	ft_dprintf(1, "%s%d threads%s\n", CYAN, *((t_data_head *)((*head)->content))->nb_threads, RESET);
-	ft_dprintf(1, "%s%d nodes%s\n", CYAN, ft_lstsize(*head), RESET);
 	current = (*head)->next;
 	while (current)
 	{
@@ -104,12 +100,17 @@ void	print_list(t_list **head)
 			 GREEN, (char *)extract_data_node(current->content, TRIGRAM), RESET,
 			 YELLOW, count, RESET);
 		dprintf(1, " prob : %s%.2f%%%s", YELLOW, 100.0f * count / max, RESET);
-		if (DISP == 2)
+		if (p)
 		{
 			ft_dprintf(1, ", pos:[" );
 			int i = -1;
 			while (++i < count)
-				ft_dprintf(1, "%d, ", pos[i]);
+			{
+				if (i == count - 1)
+					ft_dprintf(1, "%d", pos[i]);
+				else
+					ft_dprintf(1, "%d, ", pos[i]);
+			}
 			ft_dprintf(1, "]");
 		}
 		ft_dprintf(1, "\n");
@@ -118,4 +119,9 @@ void	print_list(t_list **head)
 		else 
 			break;
 	}
+	ft_dprintf(1, "\n%slength of the sample %d\n%s", CYAN, ((t_data_head *)((*head)->content))->size_sample, RESET);
+	ft_dprintf(1, "%s%d trigrams\n%s", CYAN, max, RESET);
+	ft_dprintf(1, "%s%d threads%s\n", CYAN, *((t_data_head *)((*head)->content))->nb_threads, RESET);
+	ft_dprintf(1, "%s%d nodes%s\n", CYAN, ft_lstsize(*head), RESET);
+
 }

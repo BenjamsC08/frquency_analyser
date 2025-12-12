@@ -26,7 +26,7 @@ void		free_data_node(void *data);
 void		free_data_head(void *ptr_data);
 //	list_utils.c
 char		**split_for_threads(t_data *data);
-void		print_list(t_list **head);
+void		print_list(t_list **head, t_uint p);
 void		destroy_list(t_list **head);
 //
 int export_list(t_list **head);

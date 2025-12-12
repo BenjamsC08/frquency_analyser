@@ -4,7 +4,6 @@ int read_config(FILE *f, t_data *data, t_uint v)
 {
 	int value;
 
-
 	if (f && fscanf(f, "%x", &value) == 1)
 	{
 		if (!value)
@@ -17,10 +16,11 @@ int read_config(FILE *f, t_data *data, t_uint v)
 		value = v;
 	else
 		return (0);
-	data->config = get_bit(value, 0);
-	data->hex = get_bit(value, 1);
-	data->n_grams = get_bits(value, 2, 6);
-	data->max_threads = get_bits(value, 8, 5);
+	data->disp_pos = get_bit(value, 0); 
+	data->config = get_bit(value, 1);
+	data->hex = get_bit(value, 2);
+	data->n_grams = get_bits(value, 3, 7);
+	data->max_threads = get_bits(value, 10, 5);
 
 	return (1);
 }
@@ -72,6 +72,18 @@ int config_file(t_data *data)
         ft_dprintf(1, "Invalid size.\n");
         while (getchar() != '\n');
     }
+	value += tmp;
+	value <<= 1;
+	if (tmp == 0)
+	{
+		while (1) {
+			ft_dprintf(1, "Disp Position ? [1/0]:\n");
+			if (scanf("%d", &tmp) == 1 && (tmp == 1 || tmp == 0))
+				break;
+			ft_dprintf(1, "Invalid size.\n");
+			while (getchar() != '\n');
+		}
+	}
 	value += tmp;
     while (getchar() != '\n');
 

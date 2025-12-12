@@ -1,7 +1,7 @@
 #include "freq_a.h"
 
 char *get_big_string(void) {
-    size_t cap = 256, used = 0;
+    t_uint cap = 256, used = 0;
     char *s = malloc(cap);
     int c;
 
@@ -16,10 +16,16 @@ char *get_big_string(void) {
     return s;
 }
 
-t_data	*init_data(t_data *data)
+t_data	*init_data(t_data *data, char *s)
 {
-	ft_dprintf(1, "Put your string\n");
-	char *str = get_big_string();
+	char *str;
+	if (!s)
+	{
+		ft_dprintf(1, "Put your string\n");
+		str = get_big_string();
+	}
+	else
+		str = s;
 	if (data->hex)
 	{
 		data->text = hex_format(str, 0);
@@ -69,15 +75,37 @@ int rmv_empty_node(void *content, void *ref, size_t size)
 	return (1);
 }
 
-int main()
+int main(int argc, char **argv)
 {
 	t_data data;
 	t_list *head = NULL;
+	char *str = NULL;
 
+	if (argc == 2)
+	{
+		if (!ft_strncmp("-r", argv[1], 2))
+			remove("config");
+		else 
+		{
+			int fd = open(argv[1], O_RDONLY);
+			if (fd != -1)
+			{
+				char *get;
+				get = get_next_line(fd);
+				str = ft_strdup(get);
+				while (get)
+				{
+					free(get);
+					get = get_next_line(fd);
+					if (get)
+						str = ft_strfjoin(str, get);
+				}
+			}
+		}
+	}
 	if (!config_file(&data))
 		return (1);
-
-	if (!init_data(&data))
+	if (!init_data(&data, str))
 		return (1);
 	head = init_head(&data);
 	if (!head)
@@ -96,7 +124,7 @@ int main()
 		*data.list = lst_merge_sort(*data.list, &compare_node_decrescent);
 
 	if (!data.config)
-		print_list(data.head);
+		print_list(data.head, data.disp_pos);
 	else
 		export_list(data.head);
 	destroy_list(data.head);

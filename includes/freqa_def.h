@@ -38,6 +38,7 @@ typedef struct s_data
 	pthread_t	*threads;
 	t_list		**head;
 	t_list		**list;
+	t_uint		disp_pos;
 	t_uint		n_grams;
 	t_uint		nb_trigrams;	  //count for all trigram
 	t_bool		config;			  // 0 if only frequency, 1 if another prog call it
